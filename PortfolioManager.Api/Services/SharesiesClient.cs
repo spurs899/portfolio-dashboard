@@ -1,4 +1,5 @@
-﻿using PortfolioManager.Contracts.Models;
+﻿using PortfolioManager.Contracts;
+using PortfolioManager.Contracts.Models;
 using PortfolioManager.Core.Interfaces;
 
 namespace PortfolioManager.Api.Services;
@@ -6,7 +7,6 @@ namespace PortfolioManager.Api.Services;
 public class SharesiesClient : ISharesiesClient
 {
     private readonly HttpClient _httpClient;
-    private const string BaseUrl = "https://app.sharesies.com/api";
     private string? _rakaiaToken;
     private string? _distillToken;
 
@@ -26,7 +26,7 @@ public class SharesiesClient : ISharesiesClient
             Remember = true
         };
 
-        var response = await _httpClient.PostAsJsonAsync($"{BaseUrl}/identity/login", loginRequest);
+        var response = await _httpClient.PostAsJsonAsync($"{Constants.BaseSharesiesApiUrl}/identity/login", loginRequest);
         
         if (response.IsSuccessStatusCode)
         {
@@ -40,19 +40,17 @@ public class SharesiesClient : ISharesiesClient
                 return loginResponse;
             }
         }
-
         return null;
     }
 
     public async Task<SharesiesProfileResponse?> GetProfileAsync()
     {
-        return await _httpClient.GetFromJsonAsync<SharesiesProfileResponse>($"{BaseUrl}/profiles");
+        return await _httpClient.GetFromJsonAsync<SharesiesProfileResponse>($"{Constants.BaseSharesiesApiUrl}/profiles");
     }
 
     public async Task<SharesiesPortfolio?> GetPortfolioAsync(string? portfolioId = null)
     {
-        //https://portfolio.sharesies.nz/api/v1/portfolios/56a69fe9-3473-4734-9e3f-ece717fa10fe/instruments
-        var url = $"https://portfolio.sharesies.nz/api/v1/portfolios/{portfolioId}/instruments";
+        var url = $"{Constants.BasePortfolioSharesiesApiUrl}/portfolios/{portfolioId}/instruments";
         
         var request = new HttpRequestMessage(HttpMethod.Get, url);
         
@@ -65,15 +63,7 @@ public class SharesiesClient : ISharesiesClient
             request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _rakaiaToken);
         }
 
-        request.Headers.Add("Origin", "https://app.sharesies.com");
-        request.Headers.Add("Referer", "https://app.sharesies.com/");
-        request.Headers.Add("sec-ch-ua", "\"Google Chrome\";v=\"143\", \"Chromium\";v=\"143\", \"Not A(Brand\";v=\"24\"");
-        request.Headers.Add("sec-ch-ua-mobile", "?0");
-        request.Headers.Add("sec-ch-ua-platform", "\"Windows\"");
-        request.Headers.Add("sec-fetch-dest", "empty");
-        request.Headers.Add("sec-fetch-mode", "cors");
-        request.Headers.Add("sec-fetch-site", "cross-site");
-        request.Headers.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36");
+        BindHeaders(request);
         
         var response = await _httpClient.SendAsync(request);
 
@@ -87,7 +77,7 @@ public class SharesiesClient : ISharesiesClient
 
     public async Task<SharesiesInstrumentResponse?> GetInstrumentsAsync()
     {
-        const string url = "https://data.sharesies.nz/api/v1/instruments/info";
+        const string url = $"{Constants.BaseDataSharesiesApiUrl}/instruments/info";
         var request = new HttpRequestMessage(HttpMethod.Get, url);
         
         // Add headers from the provided example
@@ -99,15 +89,7 @@ public class SharesiesClient : ISharesiesClient
             request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _distillToken);
         }
 
-        request.Headers.Add("Origin", "https://app.sharesies.com");
-        request.Headers.Add("Referer", "https://app.sharesies.com/");
-        request.Headers.Add("sec-ch-ua", "\"Google Chrome\";v=\"143\", \"Chromium\";v=\"143\", \"Not A(Brand\";v=\"24\"");
-        request.Headers.Add("sec-ch-ua-mobile", "?0");
-        request.Headers.Add("sec-ch-ua-platform", "\"Windows\"");
-        request.Headers.Add("sec-fetch-dest", "empty");
-        request.Headers.Add("sec-fetch-mode", "cors");
-        request.Headers.Add("sec-fetch-site", "cross-site");
-        request.Headers.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36");
+        BindHeaders(request);
 
         var response = await _httpClient.SendAsync(request);
 
@@ -117,5 +99,18 @@ public class SharesiesClient : ISharesiesClient
         }
 
         return null;
+    }
+
+    private static void BindHeaders(HttpRequestMessage request)
+    {
+        request.Headers.Add("Origin", Constants.Origin);
+        request.Headers.Add("Referer", Constants.Origin);
+        request.Headers.Add("sec-ch-ua", "\"Google Chrome\";v=\"143\", \"Chromium\";v=\"143\", \"Not A(Brand\";v=\"24\"");
+        request.Headers.Add("sec-ch-ua-mobile", "?0");
+        request.Headers.Add("sec-ch-ua-platform", "\"Windows\"");
+        request.Headers.Add("sec-fetch-dest", "empty");
+        request.Headers.Add("sec-fetch-mode", "cors");
+        request.Headers.Add("sec-fetch-site", "cross-site");
+        request.Headers.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36");
     }
 }

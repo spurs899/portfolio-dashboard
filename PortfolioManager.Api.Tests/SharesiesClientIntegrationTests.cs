@@ -57,7 +57,8 @@ public class SharesiesClientIntegrationTests
         portfolio.Should().NotBeNull("Portfolio should be retrieved after login");
         portfolio!.InstrumentReturns.Should().NotBeNull();
 
+        // 4. Get Instruments
         var sharesiesInstrumentResponse = await _sharesiesClient.GetInstrumentsAsync();
-        sharesiesInstrumentResponse.Should().NotBeNull();
+        sharesiesInstrumentResponse.Should().NotBeNull("Instruments should be retrieved after login");
     }
 }
