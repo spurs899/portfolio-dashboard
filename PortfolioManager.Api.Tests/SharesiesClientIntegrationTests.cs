@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using FluentAssertions;
 using System.Net;
+using PortfolioManager.Contracts.Models;
 using PortfolioManager.Core.Services;
 
 namespace PortfolioManager.Api.Tests;
@@ -40,7 +41,21 @@ public class SharesiesClientIntegrationTests
         }
 
         // 1. Login
-        var loginResult = await _sharesiesClient.LoginAsync(_email, _password);
+        const string mfaCode = "";
+        SharesiesLoginResponse loginResult;
+        if (string.IsNullOrEmpty(mfaCode))
+        {
+            loginResult = await _sharesiesClient.LoginAsync(_email, _password);
+            if (loginResult is { Type: "identity_email_mfa_required" })
+            {
+                throw new Exception("Retrieve MFA code and update mfaCode variable and re-run this test");
+            }
+        }
+        else
+        {
+            loginResult = await _sharesiesClient.LoginAsync(_email, _password, mfaCode);
+        }
+        
         loginResult.Should().NotBeNull("Login should succeed with valid credentials");
 
         // 2. Get Profile

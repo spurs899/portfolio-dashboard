@@ -6,7 +6,7 @@ namespace PortfolioManager.Core.Services;
 
 public interface ISharesiesClient
 {
-    Task<SharesiesLoginResponse> LoginAsync(string email, string password);
+    Task<SharesiesLoginResponse> LoginAsync(string email, string password, string? mfaCode = null);
     Task<SharesiesProfileResponse?> GetProfileAsync();
     Task<SharesiesPortfolio?> GetPortfolioAsync(string? portfolioId = null);
     Task<SharesiesInstrumentResponse?> GetInstrumentsAsync();
@@ -24,7 +24,7 @@ public class SharesiesClient : ISharesiesClient
         _httpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36");
     }
 
-    public async Task<SharesiesLoginResponse> LoginAsync(string email, string password)
+    public async Task<SharesiesLoginResponse> LoginAsync(string email, string password, string? mfaCode = null)
     {
         var loginRequest = new SharesiesLoginRequest
         {
@@ -33,13 +33,23 @@ public class SharesiesClient : ISharesiesClient
             Remember = true
         };
 
+        if (!string.IsNullOrEmpty(mfaCode))
+        {
+            loginRequest.EmailMfaToken = mfaCode;
+        }
+
         var response = await _httpClient.PostAsJsonAsync($"{Constants.BaseSharesiesApiUrl}/identity/login", loginRequest);
-        
+
         if (response.IsSuccessStatusCode)
         {
             var loginResponse = await response.Content.ReadFromJsonAsync<SharesiesLoginResponse>();
-            // Sharesies uses cookies for subsequent requests, so we don't necessarily need to handle the token manually if HttpClient is configured with a CookieContainer
-            
+
+            if (loginResponse?.Type == "identity_email_mfa_required" && string.IsNullOrEmpty(mfaCode))
+            {
+                // MFA required but not provided
+                return loginResponse;
+            }
+
             if (loginResponse is { Authenticated: true })
             {
                 _rakaiaToken = loginResponse.RakaiaToken;
