@@ -90,13 +90,12 @@ else if (_portfolioData != null)
                             <MudTd DataLabel="Symbol">@context.Symbol</MudTd>
                             <MudTd DataLabel="Shares">@context.SharesOwned.ToString("N2")</MudTd>
                             <MudTd DataLabel="Value">@context.InvestmentValue.ToString("C")</MudTd>
-                            <MudTd DataLabel="Cost Basis">@context.CostBasis.ToString("C")</MudTd>
-                            <MudTd DataLabel="Return">
+                            <MudTd DataLabel="Daily Return">
                                 <MudText Color="@(context.TotalReturn >= 0 ? Color.Success : Color.Error)">
                                     @(context.TotalReturn >= 0 ? "+" : "")@context.TotalReturn.ToString("C")
                                 </MudText>
                             </MudTd>
-                            <MudTd DataLabel="Return %">
+                            <MudTd DataLabel="Daily Return %">
                                 <MudText Color="@(context.ReturnPercentage >= 0 ? Color.Success : Color.Error)">
                                     @(context.ReturnPercentage >= 0 ? "+" : "")@context.ReturnPercentage.ToString("F2")%
                                 </MudText>
