@@ -5,20 +5,23 @@
 
 <PageTitle>Dashboard</PageTitle>
 
-<MudGrid Class="mb-4">
-    <MudItem xs="12" md="6">
-        <MudText Typo="Typo.h4">Portfolio Dashboard</MudText>
-    </MudItem>
-    <MudItem xs="12" md="6" Class="d-flex justify-end">
-        @if (!string.IsNullOrEmpty(GetPortfolioCurrency()))
-        {
-            <MudText Typo="Typo.body1" Class="mt-2">
-                <MudIcon Icon="@Icons.Material.Filled.AttachMoney" Size="Size.Small" Class="mr-1" />
-                Currency: <strong>@GetPortfolioCurrency()</strong>
-            </MudText>
-        }
-    </MudItem>
-</MudGrid>
+<!-- Dashboard Header with Breadcrumb and Actions -->
+<div class="d-flex justify-space-between align-center mb-6">
+    <div>
+        <MudText Typo="Typo.h4" Class="fw-bold mb-1">Portfolio Dashboard</MudText>
+        <MudBreadcrumbs Items="_breadcrumbItems" Class="pa-0"></MudBreadcrumbs>
+    </div>
+    @if (!string.IsNullOrEmpty(GetPortfolioCurrency()))
+    {
+        <div class="d-flex align-center gap-3">
+            <div class="currency-badge-lg">
+                <MudIcon Icon="@Icons.Material.Filled.AccountBalance" Size="Size.Small" Class="mr-1" />
+                @GetPortfolioCurrency()
+            </div>
+            <MudIconButton Icon="@Icons.Material.Filled.Refresh" Color="Color.Primary" Variant="Variant.Filled" OnClick="RefreshPortfolio" Class="rounded-lg" />
+        </div>
+    }
+</div>
 
 @if (!_isLoggedIn)
 {
@@ -36,91 +39,140 @@ else if (_isLoading)
 }
 else if (_portfolioData != null)
 {
-    <MudGrid>
-        <MudItem xs="12" sm="6" md="3">
-            <MudCard Elevation="1" Class="stat-card">
-                <MudCardContent>
-                    <MudText Typo="Typo.body2" Color="Color.Secondary" Class="stat-label">Total Portfolio Value</MudText>
-                    <MudText Typo="Typo.h4" Class="mt-2 stat-value">@GetTotalValue().ToString("C")</MudText>
-                    <MudText Typo="Typo.body2" Color="@(GetTotalReturn() >= 0 ? Color.Success : Color.Error)" Class="stat-change">
-                        @(GetTotalReturn() >= 0 ? "▲" : "▼") @(GetTotalReturn() >= 0 ? "+" : "")@GetTotalReturn().ToString("C")
-                    </MudText>
+    <MudGrid Spacing="4">
+        <!-- Total Portfolio Value Card -->
+        <MudItem xs="12" sm="6" lg="3">
+            <MudCard Elevation="0" Class="ynex-stat-card">
+                <MudCardContent Class="pa-5">
+                    <div class="d-flex justify-space-between align-center mb-3">
+                        <MudText Typo="Typo.body2" Class="text-muted fw-semibold text-uppercase">Total Portfolio Value</MudText>
+                        <MudAvatar Color="Color.Primary" Size="Size.Medium" Class="ynex-avatar-icon">
+                            <MudIcon Icon="@Icons.Material.Filled.AccountBalance" Size="Size.Medium" />
+                        </MudAvatar>
+                    </div>
+                    <MudText Typo="Typo.h4" Class="fw-bold mb-2">@GetTotalValue().ToString("C")</MudText>
+                    <div class="d-flex align-center">
+                        <span class="ynex-badge-success">
+                            @(GetTotalReturn() >= 0 ? "▲" : "▼") @(GetTotalReturn() >= 0 ? "+" : "")@GetTotalReturn().ToString("C")
+                        </span>
+                        <MudText Typo="Typo.caption" Class="text-muted ml-2">from invested</MudText>
+                    </div>
                 </MudCardContent>
             </MudCard>
         </MudItem>
         
-        <MudItem xs="12" sm="6" md="3">
-            <MudCard Elevation="1" Class="stat-card">
-                <MudCardContent>
-                    <MudText Typo="Typo.body2" Color="Color.Secondary" Class="stat-label">Total Return</MudText>
-                    <MudText Typo="Typo.h4" Class="mt-2 stat-value">@GetTotalReturn().ToString("C")</MudText>
-                    <MudText Typo="Typo.body2" Color="@(GetReturnPercentage() >= 0 ? Color.Success : Color.Error)" Class="stat-change">
-                        @(GetReturnPercentage() >= 0 ? "▲" : "▼") @(GetReturnPercentage() >= 0 ? "+" : "")@GetReturnPercentage().ToString("F2")%
-                    </MudText>
+        <!-- Total Return Card -->
+        <MudItem xs="12" sm="6" lg="3">
+            <MudCard Elevation="0" Class="ynex-stat-card">
+                <MudCardContent Class="pa-5">
+                    <div class="d-flex justify-space-between align-center mb-3">
+                        <MudText Typo="Typo.body2" Class="text-muted fw-semibold text-uppercase">Total Return</MudText>
+                        <MudAvatar Color="Color.Success" Size="Size.Medium" Class="ynex-avatar-icon">
+                            <MudIcon Icon="@Icons.Material.Filled.TrendingUp" Size="Size.Medium" />
+                        </MudAvatar>
+                    </div>
+                    <MudText Typo="Typo.h4" Class="fw-bold mb-2">@GetTotalReturn().ToString("C")</MudText>
+                    <div class="d-flex align-center">
+                        <span class="@(GetReturnPercentage() >= 0 ? "ynex-badge-success" : "ynex-badge-error")">
+                            @(GetReturnPercentage() >= 0 ? "▲" : "▼") @(GetReturnPercentage() >= 0 ? "+" : "")@GetReturnPercentage().ToString("F2")%
+                        </span>
+                        <MudText Typo="Typo.caption" Class="text-muted ml-2">percentage gain</MudText>
+                    </div>
                 </MudCardContent>
             </MudCard>
         </MudItem>
         
-        <MudItem xs="12" sm="6" md="3">
-            <MudCard Elevation="1" Class="stat-card">
-                <MudCardContent>
-                    <MudText Typo="Typo.body2" Color="Color.Secondary" Class="stat-label">Total Holdings</MudText>
-                    <MudText Typo="Typo.h4" Class="mt-2 stat-value">@GetHoldingsCount()</MudText>
-                    <MudText Typo="Typo.body2" Color="Color.Tertiary" Class="stat-change">Instruments</MudText>
+        <!-- Total Holdings Card -->
+        <MudItem xs="12" sm="6" lg="3">
+            <MudCard Elevation="0" Class="ynex-stat-card">
+                <MudCardContent Class="pa-5">
+                    <div class="d-flex justify-space-between align-center mb-3">
+                        <MudText Typo="Typo.body2" Class="text-muted fw-semibold text-uppercase">Total Holdings</MudText>
+                        <MudAvatar Color="Color.Info" Size="Size.Medium" Class="ynex-avatar-icon">
+                            <MudIcon Icon="@Icons.Material.Filled.Inventory" Size="Size.Medium" />
+                        </MudAvatar>
+                    </div>
+                    <MudText Typo="Typo.h4" Class="fw-bold mb-2">@GetHoldingsCount()</MudText>
+                    <div class="d-flex align-center">
+                        <MudText Typo="Typo.caption" Class="text-muted">Unique instruments</MudText>
+                    </div>
                 </MudCardContent>
             </MudCard>
         </MudItem>
         
-        <MudItem xs="12" sm="6" md="3">
-            <MudCard Elevation="1" Class="stat-card">
-                <MudCardContent>
-                    <MudText Typo="Typo.body2" Color="Color.Secondary" Class="stat-label">Cost Basis</MudText>
-                    <MudText Typo="Typo.h4" Class="mt-2 stat-value">@GetTotalCostBasis().ToString("C")</MudText>
-                    <MudText Typo="Typo.body2" Color="Color.Tertiary" Class="stat-change">Total Invested</MudText>
+        <!-- Cost Basis Card -->
+        <MudItem xs="12" sm="6" lg="3">
+            <MudCard Elevation="0" Class="ynex-stat-card">
+                <MudCardContent Class="pa-5">
+                    <div class="d-flex justify-space-between align-center mb-3">
+                        <MudText Typo="Typo.body2" Class="text-muted fw-semibold text-uppercase">Cost Basis</MudText>
+                        <MudAvatar Color="Color.Secondary" Size="Size.Medium" Class="ynex-avatar-icon">
+                            <MudIcon Icon="@Icons.Material.Filled.Payments" Size="Size.Medium" />
+                        </MudAvatar>
+                    </div>
+                    <MudText Typo="Typo.h4" Class="fw-bold mb-2">@GetTotalCostBasis().ToString("C")</MudText>
+                    <div class="d-flex align-center">
+                        <MudText Typo="Typo.caption" Class="text-muted">Total invested</MudText>
+                    </div>
                 </MudCardContent>
             </MudCard>
         </MudItem>
 
+        <!-- Holdings Table -->
         <MudItem xs="12">
-            <MudCard Elevation="1" Class="holdings-card">
-                <MudCardHeader>
+            <MudCard Elevation="0" Class="ynex-table-card">
+                <MudCardHeader Class="pb-0">
                     <CardHeaderContent>
-                        <MudText Typo="Typo.h6" Class="holdings-title">Portfolio Holdings</MudText>
+                        <MudText Typo="Typo.h6" Class="fw-bold">Portfolio Holdings</MudText>
+                        <MudText Typo="Typo.body2" Class="text-muted">Overview of your investment positions</MudText>
                     </CardHeaderContent>
                     <CardHeaderActions>
-                        <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="RefreshPortfolio" StartIcon="@Icons.Material.Filled.Refresh">Refresh</MudButton>
+                        <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Default" />
                     </CardHeaderActions>
                 </MudCardHeader>
                 <MudCardContent Class="pa-0">
-                    <MudTable Items="@GetHoldings()" Hover="true" Class="holdings-table" Elevation="0">
+                    <MudTable Items="@GetHoldings()" Hover="true" Class="ynex-table" Elevation="0" Bordered="false">
                         <HeaderContent>
-                            <MudTh Class="table-header">Symbol</MudTh>
-                            <MudTh Class="table-header">Currency</MudTh>
-                            <MudTh Class="table-header">Shares</MudTh>
-                            <MudTh Class="table-header">Market Value</MudTh>
-                            <MudTh Class="table-header">Cost Basis</MudTh>
-                            <MudTh Class="table-header">Total Return</MudTh>
-                            <MudTh Class="table-header">Return %</MudTh>
+                            <MudTh Class="ynex-table-header">Symbol</MudTh>
+                            <MudTh Class="ynex-table-header">Currency</MudTh>
+                            <MudTh Class="ynex-table-header text-right">Shares</MudTh>
+                            <MudTh Class="ynex-table-header text-right">Market Value</MudTh>
+                            <MudTh Class="ynex-table-header text-right">Cost Basis</MudTh>
+                            <MudTh Class="ynex-table-header text-right">Total Return</MudTh>
+                            <MudTh Class="ynex-table-header text-right">Return %</MudTh>
                         </HeaderContent>
                         <RowTemplate>
-                            <MudTd DataLabel="Symbol" Class="symbol-cell">
-                                <MudText Typo="Typo.body1" Class="fw-bold">@context.Symbol</MudText>
+                            <MudTd DataLabel="Symbol">
+                                <div class="d-flex align-center">
+                                    <MudAvatar Color="Color.Primary" Size="Size.Small" Class="mr-3">
+                                        @context.Symbol.Substring(0, Math.Min(2, context.Symbol.Length))
+                                    </MudAvatar>
+                                    <div>
+                                        <MudText Typo="Typo.body2" Class="fw-bold">@context.Symbol</MudText>
+                                    </div>
+                                </div>
                             </MudTd>
-                            <MudTd DataLabel="Currency" Class="number-cell">
-                                <MudText Typo="Typo.body2" Class="currency-badge">@context.Currency</MudText>
+                            <MudTd DataLabel="Currency">
+                                <span class="currency-chip">@context.Currency</span>
                             </MudTd>
-                            <MudTd DataLabel="Shares" Class="number-cell">@context.SharesOwned.ToString("N2")</MudTd>
-                            <MudTd DataLabel="Market Value" Class="number-cell fw-semibold">@context.InvestmentValue.ToString("C")</MudTd>
-                            <MudTd DataLabel="Cost Basis" Class="number-cell">@context.CostBasis.ToString("C")</MudTd>
-                            <MudTd DataLabel="Total Return" Class="number-cell">
-                                <MudText Color="@(context.TotalReturn >= 0 ? Color.Success : Color.Error)" Class="fw-semibold">
+                            <MudTd DataLabel="Shares" Class="text-right">
+                                <MudText Typo="Typo.body2" Class="numeric-text">@context.SharesOwned.ToString("N2")</MudText>
+                            </MudTd>
+                            <MudTd DataLabel="Market Value" Class="text-right">
+                                <MudText Typo="Typo.body2" Class="fw-semibold numeric-text">@context.InvestmentValue.ToString("C")</MudText>
+                            </MudTd>
+                            <MudTd DataLabel="Cost Basis" Class="text-right">
+                                <MudText Typo="Typo.body2" Class="numeric-text">@context.CostBasis.ToString("C")</MudText>
+                            </MudTd>
+                            <MudTd DataLabel="Total Return" Class="text-right">
+                                <MudText Typo="Typo.body2" Color="@(context.TotalReturn >= 0 ? Color.Success : Color.Error)" Class="fw-semibold numeric-text">
                                     @(context.TotalReturn >= 0 ? "+" : "")@context.TotalReturn.ToString("C")
                                 </MudText>
                             </MudTd>
-                            <MudTd DataLabel="Return %" Class="number-cell">
-                                <MudText Color="@(context.ReturnPercentage >= 0 ? Color.Success : Color.Error)" Class="fw-semibold return-chip">
-                                    @(context.ReturnPercentage >= 0 ? "▲" : "▼") @(context.ReturnPercentage >= 0 ? "+" : "")@context.ReturnPercentage.ToString("F2")%
-                                </MudText>
+                            <MudTd DataLabel="Return %" Class="text-right">
+                                <span class="@(context.ReturnPercentage >= 0 ? "ynex-return-badge-success" : "ynex-return-badge-error")">
+                                    @(context.ReturnPercentage >= 0 ? "▲" : "▼") @Math.Abs(context.ReturnPercentage).ToString("F2")%
+                                </span>
                             </MudTd>
                         </RowTemplate>
                     </MudTable>
@@ -135,6 +187,12 @@ else if (_portfolioData != null)
     private bool _isLoading = false;
     private string? _userId;
     private PortfolioResponse? _portfolioData;
+    
+    private List<BreadcrumbItem> _breadcrumbItems = new List<BreadcrumbItem>
+    {
+        new BreadcrumbItem("Home", href: "/", icon: Icons.Material.Filled.Home),
+        new BreadcrumbItem("Dashboard", href: null, disabled: true)
+    };
 
     private async Task ShowLoginDialog()
     {

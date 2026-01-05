@@ -157,6 +157,179 @@ a, .btn-link {
     background-color: #f8f9fa !important;
 }
 
+/* Ynex-Style Dashboard Styling */
+
+/* Stat Cards */
+.ynex-stat-card {
+    border: 1px solid #e8eaed !important;
+    border-radius: 12px !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    background: white !important;
+}
+
+.ynex-stat-card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08) !important;
+    transform: translateY(-4px) !important;
+}
+
+.ynex-avatar-icon {
+    background: linear-gradient(135deg, var(--mud-palette-primary) 0%, var(--mud-palette-primary-darken) 100%) !important;
+    box-shadow: 0 4px 12px rgba(var(--mud-palette-primary-rgb), 0.3) !important;
+}
+
+.ynex-badge {
+    font-weight: 600 !important;
+    padding: 4px 12px !important;
+    border-radius: 6px !important;
+    font-size: 0.75rem !important;
+}
+
+/* Table Styling */
+.ynex-table-card {
+    border: 1px solid #e8eaed !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    background: white !important;
+}
+
+.ynex-table {
+    background: transparent !important;
+}
+
+.ynex-table .mud-table-head {
+    background-color: #f8f9fa !important;
+}
+
+.ynex-table-header {
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    color: #6c757d !important;
+    padding: 16px 20px !important;
+    border-bottom: 2px solid #e8eaed !important;
+}
+
+.ynex-table tbody tr {
+    transition: background-color 0.2s ease !important;
+    border-bottom: 1px solid #f1f3f5 !important;
+}
+
+.ynex-table tbody tr:last-child {
+    border-bottom: none !important;
+}
+
+.ynex-table tbody tr:hover {
+    background-color: #f8f9fa !important;
+}
+
+.ynex-table .mud-table-cell {
+    padding: 16px 20px !important;
+}
+
+.numeric-text {
+    font-family: 'Roboto Mono', 'SF Mono', Monaco, 'Cascadia Code', monospace !important;
+    font-size: 0.875rem !important;
+}
+
+.ynex-return-badge {
+    font-weight: 700 !important;
+    padding: 6px 12px !important;
+    border-radius: 8px !important;
+    font-size: 0.75rem !important;
+}
+
+.currency-chip {
+    background-color: #e7f5ff !important;
+    color: #1971c2 !important;
+    font-weight: 600 !important;
+    padding: 6px 12px !important;
+    border-radius: 6px !important;
+    display: inline-block;
+    font-size: 0.75rem !important;
+}
+
+.currency-badge-lg {
+    background-color: #e7f5ff;
+    color: #1971c2;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.875rem;
+}
+
+.ynex-badge-success {
+    background-color: #d3f9d8;
+    color: #2b8a3e;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    display: inline-block;
+}
+
+.ynex-badge-error {
+    background-color: #ffe3e3;
+    color: #c92a2a;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    display: inline-block;
+}
+
+.ynex-return-badge-success {
+    background-color: #d3f9d8;
+    color: #2b8a3e;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    display: inline-block;
+}
+
+.ynex-return-badge-error {
+    background-color: #ffe3e3;
+    color: #c92a2a;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    display: inline-block;
+}
+
+/* Utility Classes */
+.text-muted {
+    color: #6c757d !important;
+}
+
+.fw-semibold {
+    font-weight: 600 !important;
+}
+
+.text-uppercase {
+    text-transform: uppercase !important;
+}
+
+.gap-3 {
+    gap: 12px;
+}
+
+.rounded-lg {
+    border-radius: 12px !important;
+}
+
+/* Breadcrumbs */
+.mud-breadcrumbs {
+    font-size: 0.875rem !important;
+}
+
+.mud-breadcrumb-item {
+    color: #6c757d !important;
+}
+
 /* Force white text on drawer navigation - override MudBlazor CSS variables */
 .professional-drawer .mud-navmenu,
 .professional-drawer .mud-nav-link,
