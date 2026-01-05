@@ -1,5 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 html, body {
-    font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: #0d1b2a;
+    background-color: #f8f9fa;
 }
 
 h1:focus {
@@ -7,17 +11,209 @@ h1:focus {
 }
 
 a, .btn-link {
-    color: #594AE2;
+    color: #1a237e;
 }
 
 .btn-primary {
     color: #fff;
-    background-color: #594AE2;
-    border-color: #4a3bc2;
+    background-color: #1a237e;
+    border-color: #0d1b2a;
+    font-weight: 600;
+    letter-spacing: 0.02em;
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #594AE2;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #1a237e;
+}
+
+/* Professional Brokerage Styling */
+.stat-card {
+    border-radius: 8px !important;
+    border: 1px solid #e8eaed !important;
+    transition: all 0.2s ease-in-out !important;
+}
+
+.stat-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+    transform: translateY(-2px);
+}
+
+.stat-label {
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    color: #415a77 !important;
+}
+
+.stat-value {
+    font-size: 1.75rem !important;
+    font-weight: 700 !important;
+    color: #0d1b2a !important;
+    line-height: 1.2 !important;
+}
+
+.stat-change {
+    font-size: 0.875rem !important;
+    font-weight: 600 !important;
+    margin-top: 4px !important;
+}
+
+.holdings-card {
+    border-radius: 8px !important;
+    border: 1px solid #e8eaed !important;
+    overflow: hidden !important;
+}
+
+.holdings-title {
+    font-weight: 600 !important;
+    color: #0d1b2a !important;
+}
+
+.holdings-table {
+    background: transparent !important;
+}
+
+.holdings-table .mud-table-head {
+    background-color: #f8f9fa !important;
+}
+
+.table-header {
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    color: #415a77 !important;
+    padding: 16px !important;
+    border-bottom: 2px solid #e8eaed !important;
+}
+
+.holdings-table tbody tr {
+    transition: background-color 0.15s ease-in-out;
+}
+
+.holdings-table tbody tr:hover {
+    background-color: #f8f9fa !important;
+}
+
+.symbol-cell {
+    font-weight: 600 !important;
+    color: #0d1b2a !important;
+}
+
+.number-cell {
+    font-family: 'Roboto Mono', 'SF Mono', Monaco, 'Cascadia Code', monospace !important;
+    font-size: 0.875rem !important;
+    text-align: right !important;
+}
+
+.fw-bold {
+    font-weight: 700 !important;
+}
+
+.fw-semibold {
+    font-weight: 600 !important;
+}
+
+.return-chip {
+    font-family: 'Roboto Mono', 'SF Mono', Monaco, 'Cascadia Code', monospace !important;
+    font-weight: 600 !important;
+    font-size: 0.8rem !important;
+}
+
+/* Professional Layout Styling */
+.professional-appbar {
+    background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+    height: 64px !important;
+}
+
+.appbar-title {
+    font-weight: 600 !important;
+    letter-spacing: 0.02em !important;
+    color: #ffffff !important;
+}
+
+.professional-drawer {
+    border-right: 1px solid #2d3748 !important;
+    background: #1b263b !important;
+}
+
+.drawer-header {
+    background: rgba(13, 27, 42, 0.6) !important;
+    border-bottom: 1px solid #2d3748 !important;
+}
+
+.drawer-title {
+    color: #e0e1dd !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.05em !important;
+    text-transform: uppercase !important;
+    font-size: 0.875rem !important;
+}
+
+.professional-content {
+    background-color: #f8f9fa !important;
+}
+
+/* Force white text on drawer navigation - override MudBlazor CSS variables */
+.professional-drawer .mud-navmenu,
+.professional-drawer .mud-nav-link,
+.professional-drawer .mud-nav-link *,
+.professional-drawer .mud-nav-item {
+    --mud-palette-primary: white !important;
+    --mud-palette-primary-text: white !important;
+    --mud-palette-text-primary: white !important;
+}
+
+.professional-drawer .mud-nav-link {
+    color: white !important;
+}
+
+.professional-drawer .mud-nav-link svg,
+.professional-drawer .mud-nav-link .mud-icon-root {
+    color: white !important;
+    fill: white !important;
+}
+
+/* Navigation Menu Styling - Force white text on dark drawer */
+.nav-menu-light .mud-nav-link,
+.nav-menu-light .mud-nav-link *,
+.nav-menu-light .mud-nav-link-text,
+.nav-menu-light .mud-nav-item .mud-nav-link {
+    color: #ffffff !important;
+}
+
+.nav-menu-light .mud-nav-link:hover,
+.nav-menu-light .mud-nav-link:hover *,
+.nav-menu-light .mud-nav-link:hover .mud-nav-link-text {
+    background-color: rgba(255, 255, 255, 0.08) !important;
+    color: #ffffff !important;
+}
+
+.nav-menu-light .mud-nav-link.active,
+.nav-menu-light .mud-nav-link.active *,
+.nav-menu-light .mud-nav-link.active .mud-nav-link-text,
+.nav-menu-light.mud-navmenu .mud-nav-link.active:not(.mud-nav-link-disabled),
+.nav-menu-light.mud-navmenu .mud-nav-link.active:not(.mud-nav-link-disabled) * {
+    background-color: rgba(26, 35, 126, 0.4) !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+}
+
+.nav-menu-light .mud-nav-link .mud-icon-root,
+.nav-menu-light .mud-nav-link svg {
+    color: #ffffff !important;
+    fill: #ffffff !important;
+}
+
+.nav-menu-light .mud-nav-link.active .mud-icon-root,
+.nav-menu-light .mud-nav-link.active svg,
+.nav-menu-light.mud-navmenu .mud-nav-link.active:not(.mud-nav-link-disabled) .mud-icon-root,
+.nav-menu-light.mud-navmenu .mud-nav-link.active:not(.mud-nav-link-disabled) svg {
+    color: #ffffff !important;
+    fill: #ffffff !important;
 }
 
 .content {

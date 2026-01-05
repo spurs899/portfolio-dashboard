@@ -2,21 +2,22 @@
 
 <MudThemeProvider Theme="@_theme" />
 <MudLayout>
-    <MudAppBar Elevation="1" Dense="true">
+    <MudAppBar Elevation="0" Dense="false" Class="professional-appbar">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-        <MudText Typo="Typo.h6">Portfolio Manager</MudText>
+        <MudText Typo="Typo.h6" Class="appbar-title">Portfolio Manager</MudText>
         <MudSpacer />
+        <MudText Typo="Typo.body2" Class="mr-4" Style="color: rgba(255,255,255,0.8);">@DateTime.Now.ToString("MMM dd, yyyy")</MudText>
         <MudIconButton Icon="@Icons.Material.Filled.Notifications" Color="Color.Inherit" />
         <MudIconButton Icon="@Icons.Material.Filled.AccountCircle" Color="Color.Inherit" />
     </MudAppBar>
-    <MudDrawer @bind-Open="_drawerOpen" Elevation="2" ClipMode="DrawerClipMode.Always">
-        <MudDrawerHeader>
-            <MudText Typo="Typo.h6" Class="mt-1">Menu</MudText>
+    <MudDrawer @bind-Open="_drawerOpen" Elevation="0" ClipMode="DrawerClipMode.Always" Class="professional-drawer">
+        <MudDrawerHeader Class="drawer-header">
+            <MudText Typo="Typo.h6" Class="drawer-title">Navigation</MudText>
         </MudDrawerHeader>
         <NavMenu />
     </MudDrawer>
-    <MudMainContent>
-        <MudContainer MaxWidth="MaxWidth.ExtraExtraLarge" Class="mt-4">
+    <MudMainContent Class="professional-content">
+        <MudContainer MaxWidth="MaxWidth.ExtraExtraLarge" Class="mt-6 mb-6">
             @Body
         </MudContainer>
     </MudMainContent>
@@ -28,12 +29,20 @@
     {
         PaletteLight = new PaletteLight()
         {
-            Primary = "#594AE2",
-            AppbarBackground = "#594AE2",
+            Primary = "#1a237e",
+            Secondary = "#00695c",
+            AppbarBackground = "#0d1b2a",
             AppbarText = "#FFFFFF",
-            DrawerBackground = "#FFFFFF",
-            DrawerText = "rgba(0,0,0, 0.87)",
-            Background = "#F5F5F5"
+            DrawerBackground = "#1b263b",
+            DrawerText = "#FFFFFF",
+            Background = "#f8f9fa",
+            Surface = "#FFFFFF",
+            TextPrimary = "#0d1b2a",
+            TextSecondary = "#415a77",
+            Success = "#2e7d32",
+            Error = "#c62828",
+            Info = "#0277bd",
+            Warning = "#f57c00"
         }
     };
 
