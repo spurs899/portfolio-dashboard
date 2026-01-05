@@ -39,15 +39,6 @@ else if (_portfolioData != null)
         <MudItem xs="12" sm="6" md="3">
             <MudCard Elevation="2">
                 <MudCardContent>
-                    <MudText Typo="Typo.body2" Color="Color.Secondary">Total Cost Basis</MudText>
-                    <MudText Typo="Typo.h5" Class="mt-2">@GetTotalCostBasis().ToString("C")</MudText>
-                </MudCardContent>
-            </MudCard>
-        </MudItem>
-        
-        <MudItem xs="12" sm="6" md="3">
-            <MudCard Elevation="2">
-                <MudCardContent>
                     <MudText Typo="Typo.body2" Color="Color.Secondary">Total Return</MudText>
                     <MudText Typo="Typo.h5" Class="mt-2">@GetTotalReturn().ToString("C")</MudText>
                     <MudText Typo="Typo.body2" Color="@(GetReturnPercentage() >= 0 ? Color.Success : Color.Error)">
@@ -82,9 +73,8 @@ else if (_portfolioData != null)
                             <MudTh>Symbol</MudTh>
                             <MudTh>Shares</MudTh>
                             <MudTh>Value</MudTh>
-                            <MudTh>Cost Basis</MudTh>
-                            <MudTh>Return</MudTh>
-                            <MudTh>Return %</MudTh>
+                            <MudTh>Daily Return</MudTh>
+                            <MudTh>Daily Return %</MudTh>
                         </HeaderContent>
                         <RowTemplate>
                             <MudTd DataLabel="Symbol">@context.Symbol</MudTd>
