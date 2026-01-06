@@ -12,8 +12,15 @@ builder.WebHost.UseSentry((SentryAspNetCoreOptions  options) =>
 {
     builder.Configuration.GetSection("Sentry").Bind(options);
     
-    options.MinimumBreadcrumbLevel = LogLevel.Information;
-    options.MinimumEventLevel = LogLevel.Error;
+    options.MinimumBreadcrumbLevel = LogLevel.Debug;
+    options.MinimumEventLevel = LogLevel.Information;
+    
+    // Diagnostic settings
+    options.Debug = builder.Environment.IsDevelopment();
+    options.DiagnosticLevel = builder.Environment.IsDevelopment() ? SentryLevel.Debug : SentryLevel.Error;
+    
+    // Environment
+    options.Environment = builder.Environment.EnvironmentName;
     
     // Optional but useful
     options.TracesSampleRate = 0.0; // set >0 only if you want performance monitoring
@@ -42,6 +49,9 @@ builder.Services.AddMemoryCache();
 builder.Services.AddScoped<PortfolioManager.Core.Services.IMemoryCacheWrapper, PortfolioManager.Core.Services.MemoryCacheWrapper>();
 
 var app = builder.Build();
+
+// Use Sentry request tracking
+app.UseSentryTracing();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
