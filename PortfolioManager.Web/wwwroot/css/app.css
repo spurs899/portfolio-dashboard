@@ -464,3 +464,28 @@ code {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
     text-align: start;
 }
+
+/* Sharesies Login Button */
+.sharesies-login-btn {
+    background: linear-gradient(135deg, #ff4785 0%, #ff1f6b 100%) !important;
+    color: white !important;
+    font-weight: 600 !important;
+    padding: 12px 24px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    transition: all 0.2s ease-in-out !important;
+}
+
+.sharesies-login-btn:hover {
+    background: linear-gradient(135deg, #ff1f6b 0%, #e6195e 100%) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(255, 71, 133, 0.4) !important;
+}
+
+.sharesies-login-btn img {
+    height: 28px;
+    width: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+}
