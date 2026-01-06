@@ -21,6 +21,7 @@ builder.WebHost.UseSentry((SentryAspNetCoreOptions  options) =>
     
     // Environment
     options.Environment = builder.Environment.EnvironmentName;
+    options.EnableLogs = true;
     
     // Optional but useful
     options.TracesSampleRate = 0.0; // set >0 only if you want performance monitoring
