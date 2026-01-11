@@ -19,27 +19,27 @@ jobs:
       with:
         dotnet-version: 9.0.x
     
-    - name: Enable Demo Mode
+    - name: Enable Demo Mode and Set Sentry DSN
+      env:
+        SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       run: |
-        cat > PortfolioManager.Web/wwwroot/appsettings.json << 'EOF'
-        {
-          "DemoMode": true
-        }
-        EOF
-    
-    - name: Set Sentry DSN
-      if: secrets.SENTRY_DSN != ''
-      run: |
-        # Update appsettings.json with Sentry DSN from secrets
-        cat > PortfolioManager.Web/wwwroot/appsettings.json << EOF
+        if [ -n "$SENTRY_DSN" ]; then
+          cat > PortfolioManager.Web/wwwroot/appsettings.json << EOF
         {
           "DemoMode": true,
           "Sentry": {
-            "Dsn": "${{ secrets.SENTRY_DSN }}",
+            "Dsn": "$SENTRY_DSN",
             "Environment": "demo"
           }
         }
         EOF
+        else
+          cat > PortfolioManager.Web/wwwroot/appsettings.json << 'EOF'
+        {
+          "DemoMode": true
+        }
+        EOF
+        fi
     
     - name: Publish
       run: dotnet publish PortfolioManager.Web -c Release -o release
