@@ -41,9 +41,11 @@ Manual deployment workflow for the demo site. Deploys a Blazor WASM app with dem
 
 - **Multi-Brokerage Portfolio Aggregation** - View holdings from multiple brokers in one dashboard
 - **Real-Time Analytics** - Track total value, daily returns, and performance metrics
+- **NYSE Market Status** - Live market hours tracking with holiday calendar support
 - **Secure Authentication** - MFA support for Sharesies login
 - **Holdings Management** - Detailed instrument breakdown with returns tracking
 - **Modern UI** - Blazor WebAssembly with MudBlazor Material Design components
+- **Demo Mode** - Try the dashboard with sample data without credentials
 
 ## Projects
 
@@ -97,24 +99,61 @@ Manual deployment workflow for the demo site. Deploys a Blazor WASM app with dem
 
 ### Running the Application
 
-1. **Start the API** (Terminal 1)
+#### Option 1: Full Features (API + Web)
+
+1. **Configure API Settings** (Optional - for market data)
+   
+   Copy `appsettings.template.json` to `appsettings.Development.json` in `PortfolioManager.Api/`:
+   ```sh
+   cp PortfolioManager.Api/appsettings.template.json PortfolioManager.Api/appsettings.Development.json
+   ```
+   
+   Then add your [Polygon.io](https://polygon.io/) API key (free tier available):
+   ```json
+   {
+     "Polygon": {
+       "ApiKey": "your_api_key_here"
+     }
+   }
+   ```
+   
+   **Note**: Without an API key, the app will fall back to calculated market hours (works offline).
+
+2. **Start the API** (Terminal 1)
    ```sh
    dotnet run --project PortfolioManager.Api
    ```
    - API runs on `http://localhost:5269`
    - Swagger UI available at `http://localhost:5269/swagger`
 
-2. **Start the Web App** (Terminal 2)
+3. **Start the Web App** (Terminal 2)
    ```sh
    dotnet run --project PortfolioManager.Web
    ```
    - Web app runs on `http://localhost:5262` or `https://localhost:7262`
 
-3. **Login with Sharesies**
+4. **Login with Sharesies**
    - Click "Login with Sharesies" on the dashboard
    - Enter your Sharesies credentials
    - Complete MFA verification if enabled
    - View your portfolio data
+
+#### Option 2: Demo Mode Only (No API Required)
+
+Set `DemoMode: true` in `PortfolioManager.Web/wwwroot/appsettings.json`:
+```json
+{
+  "DemoMode": true,
+  "ApiBaseUrl": "http://localhost:5269"
+}
+```
+
+Run just the web app:
+```sh
+dotnet run --project PortfolioManager.Web
+```
+
+Login with any credentials to view sample portfolio data.
 
 ## Configuration
 

@@ -23,6 +23,7 @@ var apiBaseUrl = builder.Configuration["ApiBaseUrl"] ?? "http://localhost:5269";
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(apiBaseUrl) });
 builder.Services.AddScoped<ISharesiesService, SharesiesService>();
 builder.Services.AddScoped<IAuthStateService, AuthStateService>();
+builder.Services.AddScoped<IMarketStatusService, MarketStatusService>();
 builder.Services.AddMudServices();
 
 await builder.Build().RunAsync();
