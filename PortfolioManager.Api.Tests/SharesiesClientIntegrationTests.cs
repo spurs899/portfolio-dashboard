@@ -32,8 +32,7 @@ public class SharesiesClientIntegrationTests
         _sharesiesClient = new SharesiesClient(httpClient);
     }
 
-    //[Fact(Skip = "Requires actual Sharesies credentials")]
-    [Fact]
+    [Fact(Skip = "Requires actual Sharesies credentials")]
     public async Task FullIntegrationFlow_ShouldSucceed()
     {
         if (string.IsNullOrEmpty(_email) || string.IsNullOrEmpty(_password))
