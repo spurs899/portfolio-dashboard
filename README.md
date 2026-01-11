@@ -10,15 +10,15 @@ PortfolioDashboard is a .NET 9.0 solution for managing and visualising investmen
 ## Screenshots
 
 ### Dashboard
-![Dashboard](dashboard.png)
+![Dashboard](Screenshots/dashboard.png)
 *Portfolio overview with real-time analytics, holdings breakdown, and multi-brokerage support*
 
 ### Login Flow
 <table>
   <tr>
-    <td><img src="login.png" alt="Login Page" /><br/><em>Initial login page</em></td>
-    <td><img src="login_credentials.png" alt="Login Credentials" /><br/><em>Enter your credentials</em></td>
-    <td><img src="login_mfa.png" alt="MFA Verification" /><br/><em>MFA code verification</em></td>
+    <td><img src="Screenshots/login.png" alt="Login Page" /><br/><em>Initial login page</em></td>
+    <td><img src="Screenshots/login_credentials.png" alt="Login Credentials" /><br/><em>Enter your credentials</em></td>
+    <td><img src="Screenshots/login_mfa.png" alt="MFA Verification" /><br/><em>MFA code verification</em></td>
   </tr>
 </table>
 
