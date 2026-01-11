@@ -25,32 +25,12 @@ public class SharesiesService : ISharesiesService
 
     public async Task<LoginResult> LoginAsync(string email, string password)
     {
-        if (_demoMode)
+        var demoFlowResult = await HandleDemoFlow(email, password);
+        if (demoFlowResult != null)
         {
-            await Task.Delay(800); // Simulate network delay
-            
-            // Accept any credentials in demo mode
-            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
-            {
-                return new LoginResult
-                {
-                    Success = false,
-                    RequiresMfa = false,
-                    Message = "Please enter email and password"
-                };
-            }
-            
-            return new LoginResult
-            {
-                Success = true,
-                RequiresMfa = false,
-                UserId = "demo-user-123",
-                RakaiaToken = "demo-rakaia-token",
-                DistillToken = "demo-distill-token",
-                Message = "Login successful (Demo Mode)"
-            };
+            return demoFlowResult;
         }
-
+        
         var formData = new Dictionary<string, string>
         {
             { "email", email },
@@ -294,6 +274,34 @@ public class SharesiesService : ISharesiesService
             // Return null to indicate authentication failure
             return null;
         }
+    }
+
+    private async Task<LoginResult?> HandleDemoFlow(string email, string password)
+    {
+        if (!_demoMode) return null;
+        
+        await Task.Delay(800); // Simulate network delay
+            
+        // Accept any credentials in demo mode
+        if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+        {
+            return new LoginResult
+            {
+                Success = false,
+                RequiresMfa = false,
+                Message = "Please enter email and password"
+            };
+        }
+            
+        return new LoginResult
+        {
+            Success = true,
+            RequiresMfa = false,
+            UserId = "demo-user-123",
+            RakaiaToken = "demo-rakaia-token",
+            DistillToken = "demo-distill-token",
+            Message = "Login successful (Demo Mode)"
+        };
     }
 }
 

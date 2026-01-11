@@ -66,6 +66,9 @@
     {
         await AuthStateService.ClearAuthStateAsync();
         Snackbar.Add("Logged out successfully", Severity.Success);
-        Navigation.NavigateTo("/", forceLoad: true);
+        
+        // Force full page reload to ensure clean state
+        // NavigateTo with forceLoad will respect the base href in index.html
+        Navigation.NavigateTo(Navigation.BaseUri, forceLoad: true);
     }
 }
