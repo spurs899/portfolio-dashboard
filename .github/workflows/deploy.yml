@@ -27,6 +27,12 @@ jobs:
         }
         EOF
     
+    - name: Set Sentry DSN
+      if: ${{ secrets.SENTRY_DSN != '' }}
+      run: |
+        # Update appsettings.json with Sentry DSN from secrets
+        sed -i 's|"DemoMode": true|"DemoMode": true,\n  "Sentry": {\n    "Dsn": "${{ secrets.SENTRY_DSN }}"\n  }|' PortfolioManager.Web/wwwroot/appsettings.json
+    
     - name: Publish
       run: dotnet publish PortfolioManager.Web -c Release -o release
     
