@@ -488,3 +488,7 @@ $RECYCLE.BIN/
 **/appsettings.json
 !**/appsettings.Development.json
 !**/appsettings.Production.json
+!PortfolioManager.Web/wwwroot/appsettings.json
+
+# Business plan
+Consulting_SaaS_Business_Plan.csv
