@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "PortfolioManager.Web",
   "resources": {
-    "hash": "sha256-YZ6jtgRIWBevYD8I2xS4NUr9+VwOjwqbhApLPc73tio=",
+    "hash": "sha256-S4Iv3v7RbeZezVpux4VpiNm+htSl9FF9x30ao+qz54U=",
     "fingerprinting": {
       "Microsoft.AspNetCore.Components.5313pns49y.wasm": "Microsoft.AspNetCore.Components.wasm",
       "Microsoft.AspNetCore.Components.Forms.x80val28il.wasm": "Microsoft.AspNetCore.Components.Forms.wasm",
@@ -48,8 +48,8 @@
       "System.Text.Json.cnw80kdiik.wasm": "System.Text.Json.wasm",
       "System.Text.RegularExpressions.rp6yw2zzeg.wasm": "System.Text.RegularExpressions.wasm",
       "System.t4d4s3f398.wasm": "System.wasm",
-      "System.Private.CoreLib.jm7kad1bjv.wasm": "System.Private.CoreLib.wasm",
-      "PortfolioManager.Web.jtfmafncm4.wasm": "PortfolioManager.Web.wasm",
+      "System.Private.CoreLib.cgjpao6c7v.wasm": "System.Private.CoreLib.wasm",
+      "PortfolioManager.Web.9uqq6887x1.wasm": "PortfolioManager.Web.wasm",
       "dotnet.js": "dotnet.js",
       "dotnet.native.noby4tlk4d.js": "dotnet.native.js",
       "dotnet.native.qe75a9vfqn.wasm": "dotnet.native.wasm",
@@ -74,7 +74,7 @@
     },
     "coreAssembly": {
       "System.Runtime.InteropServices.JavaScript.u9tzo6t7zm.wasm": "sha256-8v7jVijrzRlaTmvdds4+ZNyPL5DYfnYnzFYT2HtkqwM=",
-      "System.Private.CoreLib.jm7kad1bjv.wasm": "sha256-ZS6cTA0HJoC8BSbM9HPGONhuNe7ekvGo8GjC+mpE6Gg="
+      "System.Private.CoreLib.cgjpao6c7v.wasm": "sha256-RMd1aGJARsSH/FUAgV7iWPETlGfO6qHmZGgtFztDTkU="
     },
     "assembly": {
       "Microsoft.AspNetCore.Components.5313pns49y.wasm": "sha256-QV2n3UuuuHR6Y1H5yKDCWB/OZRtWGyBoUOQIwiHvkBc=",
@@ -121,7 +121,7 @@
       "System.Text.Json.cnw80kdiik.wasm": "sha256-SHfBa+akANE3PQfNTTD8YvZLqiHfD4hGkPmx3eeO4po=",
       "System.Text.RegularExpressions.rp6yw2zzeg.wasm": "sha256-f65BTnSZD2Z2rpKQqeSmU3EW0CzjNkeIqLWAU6/l8Rw=",
       "System.t4d4s3f398.wasm": "sha256-fVP2BxRRKpBA0PmBbKxmO45bXDrAXVn1GthlDclLbeU=",
-      "PortfolioManager.Web.jtfmafncm4.wasm": "sha256-abD0LYp7b1CyKqUPOrEGu479aT+4NWkHVDHFX864pVY="
+      "PortfolioManager.Web.9uqq6887x1.wasm": "sha256-n89cTwxKg0LSmzHSJ7liTcKT+2bnJqUVUmLLMqw6TCY="
     }
   },
   "cacheBootResources": true,
