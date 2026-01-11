@@ -4,8 +4,34 @@
 @inject IDialogService DialogService
 @inject ISnackbar Snackbar
 @inject IConfiguration Configuration
+@implements IDisposable
 
 <PageTitle>Dashboard</PageTitle>
+
+<!-- Timezone Information -->
+<MudCard Elevation="0" Class="mb-4" Style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+    <MudCardContent Class="pa-4">
+        <div class="d-flex justify-space-between align-center flex-wrap">
+            <div class="d-flex align-center">
+                <MudIcon Icon="@Icons.Material.Filled.Schedule" Color="Color.Default" Size="Size.Medium" Class="mr-3" Style="color: white;" />
+                <div>
+                    <MudText Typo="Typo.body2" Style="color: rgba(255,255,255,0.9); font-weight: 500;">Local Time (@_localTimeZone)</MudText>
+                    <MudText Typo="Typo.h6" Style="color: white; font-weight: 600;">@_localTime</MudText>
+                </div>
+            </div>
+            <div class="d-flex align-center">
+                <MudIcon Icon="@Icons.Material.Filled.Public" Color="Color.Default" Size="Size.Medium" Class="mr-3" Style="color: white;" />
+                <div>
+                    <MudText Typo="Typo.body2" Style="color: rgba(255,255,255,0.9); font-weight: 500;">NYSE (Eastern Time)</MudText>
+                    <MudText Typo="Typo.h6" Style="color: white; font-weight: 600;">@_nyseTime</MudText>
+                </div>
+            </div>
+            <div class="d-flex align-center">
+                <MudChip T="string" Size="Size.Small" Style="@GetMarketStatusStyle()">@_marketStatus</MudChip>
+            </div>
+        </div>
+    </MudCardContent>
+</MudCard>
 
 <!-- Dashboard Header with Breadcrumb and Actions -->
 <div class="d-flex justify-space-between align-center mb-6">
@@ -206,6 +232,13 @@ else if (_portfolioData != null)
     private decimal _cachedDailyReturnPercentage;
     private int _cachedHoldingsCount;
     
+    // Time and timezone tracking
+    private System.Threading.Timer? _timer;
+    private string _localTime = "";
+    private string _localTimeZone = "";
+    private string _nyseTime = "";
+    private string _marketStatus = "";
+    
     private List<BreadcrumbItem> _breadcrumbItems = new List<BreadcrumbItem>
     {
         new BreadcrumbItem("Home", href: "/", icon: Icons.Material.Filled.Home),
@@ -215,7 +248,113 @@ else if (_portfolioData != null)
     protected override async Task OnInitializedAsync()
     {
         _demoMode = Configuration.GetValue<bool>("DemoMode");
+        UpdateTimes();
+        StartTimerAsync();
         await TryAutoLoginAsync();
+    }
+
+    private void StartTimerAsync()
+    {
+        _timer = new System.Threading.Timer(async _ =>
+        {
+            UpdateTimes();
+            await InvokeAsync(StateHasChanged);
+        }, null, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
+    }
+
+    private void UpdateTimes()
+    {
+        var now = DateTime.Now;
+        
+        // Calculate Eastern Time (UTC-5 or UTC-4 during DST)
+        // Note: In browser/WASM, we can't use TimeZoneInfo.FindSystemTimeZoneById
+        // We'll use UTC and calculate offset manually
+        var utcNow = DateTime.UtcNow;
+        
+        // Eastern Time is UTC-5 (EST) or UTC-4 (EDT during daylight saving)
+        // Approximate DST: 2nd Sunday in March to 1st Sunday in November
+        var isDST = IsDaylightSavingTime(utcNow);
+        var easternOffset = isDST ? -4 : -5;
+        var nyseNow = utcNow.AddHours(easternOffset);
+        
+        _localTime = now.ToString("h:mm:ss tt");
+        _localTimeZone = $"UTC{GetUtcOffset(now)}";
+        _nyseTime = nyseNow.ToString("h:mm:ss tt");
+        
+        // Determine market status (NYSE trading hours: 9:30 AM - 4:00 PM ET, Monday-Friday)
+        if (nyseNow.DayOfWeek == DayOfWeek.Saturday || nyseNow.DayOfWeek == DayOfWeek.Sunday)
+        {
+            _marketStatus = "Market Closed (Weekend)";
+        }
+        else
+        {
+            var marketOpen = new TimeSpan(9, 30, 0);
+            var marketClose = new TimeSpan(16, 0, 0);
+            var currentTime = nyseNow.TimeOfDay;
+            
+            if (currentTime >= marketOpen && currentTime < marketClose)
+            {
+                _marketStatus = "Market Open";
+            }
+            else if (currentTime < marketOpen)
+            {
+                _marketStatus = "Pre-Market";
+            }
+            else
+            {
+                _marketStatus = "After Hours";
+            }
+        }
+    }
+
+    private bool IsDaylightSavingTime(DateTime utcTime)
+    {
+        var year = utcTime.Year;
+        
+        // DST starts: 2nd Sunday in March at 2 AM
+        var marchFirst = new DateTime(year, 3, 1);
+        var daysUntilSunday = ((int)DayOfWeek.Sunday - (int)marchFirst.DayOfWeek + 7) % 7;
+        var dstStart = marchFirst.AddDays(daysUntilSunday + 7).AddHours(7); // 2 AM EST = 7 AM UTC
+        
+        // DST ends: 1st Sunday in November at 2 AM
+        var novemberFirst = new DateTime(year, 11, 1);
+        daysUntilSunday = ((int)DayOfWeek.Sunday - (int)novemberFirst.DayOfWeek + 7) % 7;
+        var dstEnd = novemberFirst.AddDays(daysUntilSunday).AddHours(6); // 2 AM EDT = 6 AM UTC
+        
+        return utcTime >= dstStart && utcTime < dstEnd;
+    }
+
+    private string GetUtcOffset(DateTime localTime)
+    {
+        var offset = TimeZoneInfo.Local.GetUtcOffset(localTime);
+        var hours = offset.Hours;
+        var minutes = Math.Abs(offset.Minutes);
+        
+        if (hours >= 0)
+        {
+            return minutes > 0 ? $"+{hours}:{minutes:D2}" : $"+{hours}";
+        }
+        else
+        {
+            return minutes > 0 ? $"{hours}:{minutes:D2}" : $"{hours}";
+        }
+    }
+
+    private string GetMarketStatusStyle()
+    {
+        return _marketStatus switch
+        {
+            "Market Open" => "background-color: #4caf50; color: white; font-weight: 600;",
+            "Market Closed (Weekend)" => "background-color: #9e9e9e; color: white; font-weight: 600;",
+            "Pre-Market" => "background-color: #ff9800; color: white; font-weight: 600;",
+            "After Hours" => "background-color: #2196f3; color: white; font-weight: 600;",
+            _ => "background-color: #9e9e9e; color: white; font-weight: 600;"
+        };
+    }
+
+    public void Dispose()
+    {
+        _timer?.Dispose();
     }
 
     private async Task TryAutoLoginAsync()
