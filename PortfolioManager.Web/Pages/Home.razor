@@ -282,7 +282,6 @@ else if (_portfolioData != null)
         {
             var status = await MarketStatusService.GetMarketStatusAsync();
             _marketStatus = status.Status;
-            _nyseTime = status.NyseTime;
         }
         catch
         {

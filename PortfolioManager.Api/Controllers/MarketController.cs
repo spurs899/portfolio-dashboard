@@ -113,7 +113,7 @@ public class MarketController : ControllerBase
         return new MarketStatusResponse
         {
             Market = status,
-            ServerTime = nyseNow.ToString("yyyy-MM-ddTHH:mm:sszzz"),
+            ServerTime = $"{nyseNow:yyyy-MM-ddTHH:mm:ss}{(isDST ? "-04:00" : "-05:00")}",
             NyseStatus = status,
             NasdaqStatus = status,
             IsOpen = isOpen,
