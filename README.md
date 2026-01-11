@@ -1,5 +1,10 @@
 # PortfolioDashboard
 
+[![Build and Test](https://github.com/YOUR_USERNAME/PortfolioDashboard/actions/workflows/build-test.yml/badge.svg)](https://github.com/YOUR_USERNAME/PortfolioDashboard/actions/workflows/build-test.yml)
+[![Deploy to GitHub Pages](https://github.com/YOUR_USERNAME/PortfolioDashboard/actions/workflows/deploy.yml/badge.svg)](https://github.com/YOUR_USERNAME/PortfolioDashboard/actions/workflows/deploy.yml)
+[![.NET](https://img.shields.io/badge/.NET-9.0-512BD4?logo=dotnet)](https://dotnet.microsoft.com/)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 PortfolioDashboard is a .NET 9.0 solution for managing and visualising investment portfolios across multiple brokerages. It provides a modern web interface for viewing aggregated portfolio data from Sharesies and Interactive Brokers.
 
 ## Screenshots
