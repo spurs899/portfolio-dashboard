@@ -486,7 +486,7 @@ $RECYCLE.BIN/
 
 # appsettings with sensitive data
 **/appsettings.json
-!**/appsettings.Development.json
+**/appsettings.Development.json
 !**/appsettings.Production.json
 !PortfolioManager.Web/wwwroot/appsettings.json
 !PortfolioManager.Api/appsettings.json

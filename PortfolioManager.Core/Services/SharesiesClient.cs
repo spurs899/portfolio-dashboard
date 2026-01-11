@@ -19,7 +19,7 @@ public class SharesiesClient : ISharesiesClient
     public SharesiesClient(HttpClient httpClient)
     {
         _httpClient = httpClient;
-        _httpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36");
+        _httpClient.DefaultRequestHeaders.Add(CoreConstants.UserAgent, CoreConstants.UserAgentValue);
     }
 
     public async Task<SharesiesLoginResponse> LoginAsync(string email, string password, string? mfaCode = null)
@@ -67,7 +67,6 @@ public class SharesiesClient : ISharesiesClient
         
         var request = new HttpRequestMessage(HttpMethod.Get, url);
         
-        // Add headers from the provided example
         request.Headers.Add("Accept", "*/*");
         request.Headers.Add("Accept-Language", "en-US,en;q=0.9");
 
@@ -134,6 +133,6 @@ public class SharesiesClient : ISharesiesClient
         request.Headers.Add("sec-fetch-dest", "empty");
         request.Headers.Add("sec-fetch-mode", "cors");
         request.Headers.Add("sec-fetch-site", "cross-site");
-        request.Headers.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36");
+        request.Headers.TryAddWithoutValidation(CoreConstants.UserAgent, CoreConstants.UserAgentValue);
     }
 }
