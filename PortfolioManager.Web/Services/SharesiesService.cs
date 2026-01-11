@@ -1,5 +1,6 @@
 using System.Net.Http.Json;
 using System.Text.Json.Serialization;
+using Microsoft.Extensions.Configuration;
 
 namespace PortfolioManager.Web.Services;
 
@@ -14,14 +15,30 @@ public interface ISharesiesService
 public class SharesiesService : ISharesiesService
 {
     private readonly HttpClient _httpClient;
+    private readonly bool _demoMode;
 
-    public SharesiesService(HttpClient httpClient)
+    public SharesiesService(HttpClient httpClient, IConfiguration configuration)
     {
         _httpClient = httpClient;
+        _demoMode = configuration.GetValue<bool>("DemoMode");
     }
 
     public async Task<LoginResult> LoginAsync(string email, string password)
     {
+        if (_demoMode)
+        {
+            await Task.Delay(500); // Simulate network delay
+            return new LoginResult
+            {
+                Success = true,
+                RequiresMfa = false,
+                UserId = "demo-user-123",
+                RakaiaToken = "demo-rakaia-token",
+                DistillToken = "demo-distill-token",
+                Message = "Login successful (Demo Mode)"
+            };
+        }
+
         var formData = new Dictionary<string, string>
         {
             { "email", email },
@@ -61,6 +78,19 @@ public class SharesiesService : ISharesiesService
 
     public async Task<LoginResult> LoginMfaAsync(string email, string password, string mfaCode)
     {
+        if (_demoMode)
+        {
+            await Task.Delay(500);
+            return new LoginResult
+            {
+                Success = true,
+                UserId = "demo-user-123",
+                RakaiaToken = "demo-rakaia-token",
+                DistillToken = "demo-distill-token",
+                Message = "MFA Login successful (Demo Mode)"
+            };
+        }
+
         var formData = new Dictionary<string, string>
         {
             { "email", email },
@@ -99,11 +129,129 @@ public class SharesiesService : ISharesiesService
 
     public async Task<ProfileResponse?> GetProfileAsync()
     {
+        if (_demoMode)
+        {
+            await Task.Delay(300);
+            return new ProfileResponse
+            {
+                Profiles = new List<Profile>
+                {
+                    new Profile
+                    {
+                        Id = "demo-profile-1",
+                        Name = "Demo Investment Account",
+                        Portfolios = new List<Portfolio>
+                        {
+                            new Portfolio
+                            {
+                                Id = "demo-portfolio-1",
+                                Balance = "5000.00",
+                                HoldingBalance = "45000.00"
+                            }
+                        }
+                    }
+                }
+            };
+        }
+
         return await _httpClient.GetFromJsonAsync<ProfileResponse>("api/Sharesies/profile");
     }
 
     public async Task<PortfolioResponse?> GetPortfolioAsync(string userId, string rakaiaToken, string distillToken)
     {
+        if (_demoMode)
+        {
+            await Task.Delay(500);
+            return new PortfolioResponse
+            {
+                UserProfile = new UserProfileDto
+                {
+                    Id = "demo-user-123",
+                    Name = "Demo Investor",
+                    Image = "https://via.placeholder.com/150",
+                    BrokerageType = 1
+                },
+                Instruments = new List<InstrumentDto>
+                {
+                    new InstrumentDto
+                    {
+                        Id = "1",
+                        Symbol = "AAPL",
+                        Name = "Apple Inc.",
+                        Currency = "USD",
+                        BrokerageType = 1,
+                        SharesOwned = 50,
+                        SharePrice = 175.50m,
+                        InvestmentValue = 8775.00m,
+                        CostBasis = 7500.00m,
+                        TotalReturn = 1275.00m,
+                        SimpleReturn = 17.00m,
+                        DividendsReceived = 125.00m
+                    },
+                    new InstrumentDto
+                    {
+                        Id = "2",
+                        Symbol = "MSFT",
+                        Name = "Microsoft Corporation",
+                        Currency = "USD",
+                        BrokerageType = 0,
+                        SharesOwned = 75,
+                        SharePrice = 380.00m,
+                        InvestmentValue = 28500.00m,
+                        CostBasis = 25000.00m,
+                        TotalReturn = 3500.00m,
+                        SimpleReturn = 14.00m,
+                        DividendsReceived = 450.00m
+                    },
+                    new InstrumentDto
+                    {
+                        Id = "3",
+                        Symbol = "GOOGL",
+                        Name = "Alphabet Inc.",
+                        Currency = "USD",
+                        BrokerageType = 1,
+                        SharesOwned = 30,
+                        SharePrice = 140.25m,
+                        InvestmentValue = 4207.50m,
+                        CostBasis = 4500.00m,
+                        TotalReturn = -292.50m,
+                        SimpleReturn = -6.50m,
+                        DividendsReceived = 0.00m
+                    },
+                    new InstrumentDto
+                    {
+                        Id = "4",
+                        Symbol = "TSLA",
+                        Name = "Tesla Inc.",
+                        Currency = "USD",
+                        BrokerageType = 1,
+                        SharesOwned = 20,
+                        SharePrice = 245.00m,
+                        InvestmentValue = 4900.00m,
+                        CostBasis = 3800.00m,
+                        TotalReturn = 1100.00m,
+                        SimpleReturn = 28.95m,
+                        DividendsReceived = 0.00m
+                    },
+                    new InstrumentDto
+                    {
+                        Id = "5",
+                        Symbol = "NVDA",
+                        Name = "NVIDIA Corporation",
+                        Currency = "USD",
+                        BrokerageType = 0,
+                        SharesOwned = 15,
+                        SharePrice = 495.00m,
+                        InvestmentValue = 7425.00m,
+                        CostBasis = 4200.00m,
+                        TotalReturn = 3225.00m,
+                        SimpleReturn = 76.79m,
+                        DividendsReceived = 25.00m
+                    }
+                }
+            };
+        }
+
         try
         {
             var request = new HttpRequestMessage(HttpMethod.Get, $"api/Sharesies/portfolio?userId={userId}");

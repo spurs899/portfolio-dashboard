@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Configuration;
 using Microsoft.JSInterop;
 
 namespace PortfolioManager.Web.Services;
@@ -18,14 +19,21 @@ public class AuthStateService : IAuthStateService
     private const string DistillTokenKey = "sharesies_distillToken";
     
     private readonly IJSRuntime _jsRuntime;
+    private readonly bool _demoMode;
 
-    public AuthStateService(IJSRuntime jsRuntime)
+    public AuthStateService(IJSRuntime jsRuntime, IConfiguration configuration)
     {
         _jsRuntime = jsRuntime;
+        _demoMode = configuration.GetValue<bool>("DemoMode");
     }
 
     public async Task<bool> IsAuthenticatedAsync()
     {
+        if (_demoMode)
+        {
+            return true;
+        }
+
         var userId = await GetFromLocalStorageAsync(UserIdKey);
         var rakaiaToken = await GetFromLocalStorageAsync(RakaiaTokenKey);
         return !string.IsNullOrEmpty(userId) && !string.IsNullOrEmpty(rakaiaToken);
@@ -33,6 +41,11 @@ public class AuthStateService : IAuthStateService
 
     public async Task<string?> GetUserIdAsync()
     {
+        if (_demoMode)
+        {
+            return "demo-user-123";
+        }
+
         return await GetFromLocalStorageAsync(UserIdKey);
     }
 
@@ -52,6 +65,11 @@ public class AuthStateService : IAuthStateService
 
     public async Task<(string? userId, string? rakaiaToken, string? distillToken)> GetAuthDataAsync()
     {
+        if (_demoMode)
+        {
+            return ("demo-user-123", "demo-rakaia-token", "demo-distill-token");
+        }
+
         var userId = await GetFromLocalStorageAsync(UserIdKey);
         var rakaiaToken = await GetFromLocalStorageAsync(RakaiaTokenKey);
         var distillToken = await GetFromLocalStorageAsync(DistillTokenKey);
