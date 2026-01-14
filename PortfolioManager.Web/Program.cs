@@ -28,8 +28,13 @@ builder.Services.AddScoped<IBrokerageService, BrokerageService>();
 // Legacy service for backward compatibility
 builder.Services.AddScoped<ISharesiesService, SharesiesService>();
 
-// Common services
-builder.Services.AddScoped<IAuthStateService, AuthStateService>();
+// Auth state services
+builder.Services.AddScoped<AuthStateService>();
+builder.Services.AddScoped<IAuthStateService>(sp => sp.GetRequiredService<AuthStateService>());
+builder.Services.AddScoped<IAuthStateReader>(sp => sp.GetRequiredService<AuthStateService>());
+builder.Services.AddScoped<IAuthStateWriter>(sp => sp.GetRequiredService<AuthStateService>());
+
+// Other common services
 builder.Services.AddScoped<IMarketStatusService, MarketStatusService>();
 builder.Services.AddMudServices();
 

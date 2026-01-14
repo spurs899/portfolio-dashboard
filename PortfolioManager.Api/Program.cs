@@ -16,11 +16,43 @@ builder.Services.AddHttpClient();
 builder.Services.AddHttpClient<IMarketDataProvider, PolygonMarketDataProvider>();
 builder.Services.AddScoped<IOfflineMarketStatusCalculator, NyseOfflineMarketStatusCalculator>();
 
-// Brokerage services - Register all implementations
+// Brokerage clients
+builder.Services.AddHttpClient<SharesiesClient>()
+    .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+    {
+        UseCookies = true,
+        CookieContainer = new System.Net.CookieContainer()
+    });
+
+builder.Services.AddScoped<ISharesiesClient>(sp => sp.GetRequiredService<SharesiesClient>());
+builder.Services.AddScoped<ISharesiesAuthClient>(sp => sp.GetRequiredService<SharesiesClient>());
+builder.Services.AddScoped<ISharesiesDataClient>(sp => sp.GetRequiredService<SharesiesClient>());
+
+builder.Services.AddHttpClient<InteractiveBrokersClient>()
+    .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+    {
+        UseCookies = true,
+        CookieContainer = new System.Net.CookieContainer()
+    });
+
+builder.Services.AddScoped<IInteractiveBrokersClient>(sp => sp.GetRequiredService<InteractiveBrokersClient>());
+builder.Services.AddScoped<IIbkrAuthClient>(sp => sp.GetRequiredService<InteractiveBrokersClient>());
+builder.Services.AddScoped<IIbkrDataClient>(sp => sp.GetRequiredService<InteractiveBrokersClient>());
+
+// Brokerage services - Register all implementations with ISP interfaces
 builder.Services.AddScoped<IQrAuthenticationService, IbkrQrAuthenticationService>();
+builder.Services.AddScoped<SharesiesBrokerageService>();
+builder.Services.AddScoped<InteractiveBrokersBrokerageService>();
 builder.Services.AddScoped<IBrokerageService, SharesiesBrokerageService>();
 builder.Services.AddScoped<IBrokerageService, InteractiveBrokersBrokerageService>();
+builder.Services.AddScoped<IBrokerageAuthenticationService, SharesiesBrokerageService>(sp => sp.GetRequiredService<SharesiesBrokerageService>());
+builder.Services.AddScoped<IBrokeragePortfolioService, SharesiesBrokerageService>(sp => sp.GetRequiredService<SharesiesBrokerageService>());
+builder.Services.AddScoped<IBrokerageAuthenticationService, InteractiveBrokersBrokerageService>(sp => sp.GetRequiredService<InteractiveBrokersBrokerageService>());
+builder.Services.AddScoped<IBrokeragePortfolioService, InteractiveBrokersBrokerageService>(sp => sp.GetRequiredService<InteractiveBrokersBrokerageService>());
 builder.Services.AddScoped<IBrokerageServiceFactory, BrokerageServiceFactory>();
+
+// Legacy coordinator
+builder.Services.AddScoped<PortfolioManager.Core.Coordinators.ISharesiesCoordinator, PortfolioManager.Core.Coordinators.SharesiesCoordinator>();
 
 builder.WebHost.UseSentry((SentryAspNetCoreOptions  options) =>
 {
@@ -54,22 +86,6 @@ builder.Services.AddCors(options =>
             .AllowCredentials());
 });
 
-builder.Services.AddHttpClient<ISharesiesClient, SharesiesClient>()
-    .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
-    {
-        UseCookies = true,
-        CookieContainer = new System.Net.CookieContainer()
-    });
-
-builder.Services.AddHttpClient<IInteractiveBrokersClient, InteractiveBrokersClient>()
-    .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
-    {
-        UseCookies = true,
-        CookieContainer = new System.Net.CookieContainer()
-    });
-
-builder.Services.AddScoped<PortfolioManager.Core.Coordinators.ISharesiesCoordinator, PortfolioManager.Core.Coordinators.SharesiesCoordinator>();
-
 var app = builder.Build();
 
 // Use Sentry request tracking
@@ -94,10 +110,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseCors("AllowBlazorWasm");
 app.UseRouting();
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllers();
-});
+app.MapControllers();
 
 SentrySdk.CaptureMessage("Sentry Initialised");
 
