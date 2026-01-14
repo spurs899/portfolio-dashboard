@@ -2,7 +2,7 @@ using PortfolioManager.Contracts.Models.Market;
 
 namespace PortfolioManager.Core.Services.Market;
 
-public class NyseMarketStatusCalculator : IMarketStatusCalculator
+public class NyseOfflineMarketStatusCalculator : IOfflineMarketStatusCalculator
 {
     public MarketStatusResponse CalculateMarketStatus()
     {

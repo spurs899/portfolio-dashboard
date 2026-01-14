@@ -9,16 +9,16 @@ namespace PortfolioManager.Api.Controllers;
 public class MarketController : ControllerBase
 {
     private readonly IMarketDataProvider _marketDataProvider;
-    private readonly IMarketStatusCalculator _marketStatusCalculator;
+    private readonly IOfflineMarketStatusCalculator _offlineMarketStatusCalculator;
     private readonly ILogger<MarketController> _logger;
 
     public MarketController(
         IMarketDataProvider marketDataProvider,
-        IMarketStatusCalculator marketStatusCalculator,
+        IOfflineMarketStatusCalculator offlineMarketStatusCalculator,
         ILogger<MarketController> logger)
     {
         _marketDataProvider = marketDataProvider;
-        _marketStatusCalculator = marketStatusCalculator;
+        _offlineMarketStatusCalculator = offlineMarketStatusCalculator;
         _logger = logger;
     }
 
@@ -42,13 +42,13 @@ public class MarketController : ControllerBase
                 });
             }
 
-            var calculatedStatus = _marketStatusCalculator.CalculateMarketStatus();
+            var calculatedStatus = _offlineMarketStatusCalculator.CalculateMarketStatus();
             return Ok(calculatedStatus);
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error fetching market status");
-            var calculatedStatus = _marketStatusCalculator.CalculateMarketStatus();
+            var calculatedStatus = _offlineMarketStatusCalculator.CalculateMarketStatus();
             return Ok(calculatedStatus);
         }
     }

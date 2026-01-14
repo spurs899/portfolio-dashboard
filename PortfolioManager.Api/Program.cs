@@ -13,7 +13,7 @@ builder.Services.AddHttpClient();
 
 // Market services
 builder.Services.AddHttpClient<IMarketDataProvider, PolygonMarketDataProvider>();
-builder.Services.AddScoped<IMarketStatusCalculator, NyseMarketStatusCalculator>();
+builder.Services.AddScoped<IOfflineMarketStatusCalculator, NyseOfflineMarketStatusCalculator>();
 
 builder.WebHost.UseSentry((SentryAspNetCoreOptions  options) =>
 {
