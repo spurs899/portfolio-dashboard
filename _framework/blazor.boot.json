@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "PortfolioManager.Web",
   "resources": {
-    "hash": "sha256-XZIYPJRm1tzDZqIX2yWdASgxr0K2ck7c0ZJJwW8ZhLY=",
+    "hash": "sha256-Eskta8FPIre+4CXJgEgHMh7y6QJ6uJJN7bJtljNibZI=",
     "fingerprinting": {
       "Microsoft.AspNetCore.Components.Forms.x80val28il.wasm": "Microsoft.AspNetCore.Components.Forms.wasm",
       "Microsoft.AspNetCore.Components.Web.z92snw2zcg.wasm": "Microsoft.AspNetCore.Components.Web.wasm",
@@ -22,8 +22,8 @@
       "Microsoft.JSInterop.WebAssembly.pxf5p9f275.wasm": "Microsoft.JSInterop.WebAssembly.wasm",
       "Microsoft.JSInterop.5jrli6e7v0.wasm": "Microsoft.JSInterop.wasm",
       "MudBlazor.zpg8yvqjkv.wasm": "MudBlazor.wasm",
-      "PortfolioManager.Contracts.v68o6n1n3p.wasm": "PortfolioManager.Contracts.wasm",
-      "PortfolioManager.Web.q643fsytfn.wasm": "PortfolioManager.Web.wasm",
+      "PortfolioManager.Contracts.lad5cj28ot.wasm": "PortfolioManager.Contracts.wasm",
+      "PortfolioManager.Web.3ulichtwet.wasm": "PortfolioManager.Web.wasm",
       "System.Collections.u251lahvm7.wasm": "System.Collections.wasm",
       "System.Collections.Concurrent.3fj96ung5w.wasm": "System.Collections.Concurrent.wasm",
       "System.Collections.Immutable.jjzh4dwy9b.wasm": "System.Collections.Immutable.wasm",
@@ -97,8 +97,8 @@
       "Microsoft.JSInterop.WebAssembly.pxf5p9f275.wasm": "sha256-EzPimVxYUyvc5hlmFOvopAur+oDc/0DNCvYv9ReoU70=",
       "Microsoft.JSInterop.5jrli6e7v0.wasm": "sha256-oUjSk+2l/L4Ftrz2ZUDeDuji03tl0+PXIYsUExr0ZkY=",
       "MudBlazor.zpg8yvqjkv.wasm": "sha256-WVtilY0hz3bJDL9ohZXWWX/3ZccsEs6vOJ68NOr+6DY=",
-      "PortfolioManager.Contracts.v68o6n1n3p.wasm": "sha256-d5H9maHU+eBmOtNRbO9SAWOKph3mYnCWTtzfHaebqvc=",
-      "PortfolioManager.Web.q643fsytfn.wasm": "sha256-8vZkkiC0lBgn7Zpi5OdJ6TV8uR9DfcUU7DuNG/0vGDU=",
+      "PortfolioManager.Contracts.lad5cj28ot.wasm": "sha256-c1XihEUT9zTiLJnz+ZTp0mHrFUCOnE8G99VE2K7FEV8=",
+      "PortfolioManager.Web.3ulichtwet.wasm": "sha256-C390s/Hc9jY/8AWtOV5DIO/8wBE/Pi4tbPi/z7XRGF0=",
       "System.Collections.u251lahvm7.wasm": "sha256-CsMe96lW2h66IbUX32jFwDRO43Efgzw9Kqdt2OFBsr8=",
       "System.Collections.Concurrent.3fj96ung5w.wasm": "sha256-jzhDdf8vMwVgDXaj7ErP8j2s4kqqPniH8HFC079H2po=",
       "System.Collections.Immutable.jjzh4dwy9b.wasm": "sha256-0dlmoUlgHEDxey7K5RH1Yl+G1iUfgg85ggUwtZduOtQ=",
