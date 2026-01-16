@@ -249,18 +249,15 @@ public class BrokerageService : IBrokerageService
             };
         }
 
+        // In demo mode, always require MFA to demonstrate the full flow
         return new BrokerageAuthResult
         {
             Success = true,
-            Authenticated = true,
-            Step = AuthenticationStep.Completed,
-            UserId = "demo-user-123",
-            Tokens = new Dictionary<string, string>
-            {
-                ["RakaiaToken"] = "demo-rakaia-token",
-                ["DistillToken"] = "demo-distill-token"
-            },
-            Message = "Login successful (Demo Mode)"
+            Authenticated = false,
+            RequiresMfa = true,
+            MfaType = "Email",
+            Step = AuthenticationStep.MfaRequired,
+            Message = "MFA code sent (Demo Mode - enter any code)"
         };
     }
 

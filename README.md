@@ -28,6 +28,10 @@ Manual deployment workflow for the demo site. Deploys a Blazor WASM app with dem
 ![Dashboard](Screenshots/dashboard.png)
 *Portfolio overview with real-time analytics, holdings breakdown, and multi-brokerage support*
 
+### Mobile View
+![Mobile Dashboard](Screenshots/mobile.png)
+*Responsive mobile layout with condensed holdings list and daily return summary*
+
 ### Login Flow
 <table>
   <tr>

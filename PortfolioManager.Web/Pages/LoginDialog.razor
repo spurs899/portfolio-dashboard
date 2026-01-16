@@ -12,7 +12,7 @@
         @if (_demoMode)
         {
             <MudAlert Severity="Severity.Info" Class="mb-3" Dense="true">
-                <strong>Demo Mode:</strong> Enter any credentials to view sample portfolio data
+                <strong>Demo Mode:</strong> Enter any credentials and MFA code to view sample portfolio data
             </MudAlert>
         }
         
@@ -35,13 +35,21 @@
         else
         {
             <MudAlert Severity="Severity.Info" Class="mb-3">
-                An MFA code has been sent to your email. Please enter it below.
+                @if (_demoMode)
+                {
+                    <strong>Demo Mode:</strong> <text>Enter any MFA code to continue (e.g., 123456)</text>
+                }
+                else
+                {
+                    <text>An MFA code has been sent to your email. Please enter it below.</text>
+                }
             </MudAlert>
             <MudTextField @bind-Value="_mfaCode" 
                           Label="MFA Code" 
                           Variant="Variant.Outlined" 
                           Class="mb-3"
-                          OnKeyDown="HandleKeyDown" />
+                          OnKeyDown="HandleKeyDown"
+                          Placeholder="@(_demoMode ? "123456" : "")" />
         }
 
         @if (_isLoading)
