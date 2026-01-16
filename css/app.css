@@ -390,8 +390,6 @@ a, .btn-link {
     background-color: #f8f9fa !important;
 }
 
-/* Ynex-Style Dashboard Styling */
-
 /* CSS Variables for consistency */
 :root {
     --badge-success-bg: #d3f9d8;
@@ -407,40 +405,40 @@ a, .btn-link {
 }
 
 /* Stat Cards */
-.ynex-stat-card {
+.port-dashboard-stat-card {
     border: 1px solid var(--border-color) !important;
     border-radius: var(--border-radius-lg) !important;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     background: white !important;
 }
 
-.ynex-stat-card:hover {
+.port-dashboard-stat-card:hover {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08) !important;
     transform: translateY(-4px) !important;
 }
 
-.ynex-avatar-icon {
+.port-dashboard-avatar-icon {
     background: linear-gradient(135deg, var(--mud-palette-primary) 0%, var(--mud-palette-primary-darken) 100%) !important;
     box-shadow: 0 4px 12px rgba(var(--mud-palette-primary-rgb), 0.3) !important;
 }
 
 /* Table Styling */
-.ynex-table-card {
+.port-dashboard-table-card {
     border: 1px solid var(--border-color) !important;
     border-radius: var(--border-radius-lg) !important;
     overflow: hidden !important;
     background: white !important;
 }
 
-.ynex-table {
+.port-dashboard-table {
     background: transparent !important;
 }
 
-.ynex-table .mud-table-head {
+.port-dashboard-table .mud-table-head {
     background-color: #f8f9fa !important;
 }
 
-.ynex-table-header {
+.port-dashboard-table-header {
     font-size: 0.75rem !important;
     font-weight: 700 !important;
     text-transform: uppercase !important;
@@ -450,20 +448,20 @@ a, .btn-link {
     border-bottom: 2px solid var(--border-color) !important;
 }
 
-.ynex-table tbody tr {
+.port-dashboard-table tbody tr {
     transition: background-color 0.2s ease !important;
     border-bottom: 1px solid #f1f3f5 !important;
 }
 
-.ynex-table tbody tr:last-child {
+.port-dashboard-table tbody tr:last-child {
     border-bottom: none !important;
 }
 
-.ynex-table tbody tr:hover {
+.port-dashboard-table tbody tr:hover {
     background-color: #f8f9fa !important;
 }
 
-.ynex-table .mud-table-cell {
+.port-dashboard-table .mud-table-cell {
     padding: 16px 20px !important;
 }
 
@@ -473,9 +471,9 @@ a, .btn-link {
 }
 
 /* Badge Base Styles */
-.ynex-badge,
-.ynex-badge-success,
-.ynex-badge-error {
+.port-dashboard-badge,
+.port-dashboard-badge-success,
+.port-dashboard-badge-error {
     font-weight: 600;
     padding: 4px 12px;
     border-radius: var(--border-radius-sm);
@@ -483,19 +481,19 @@ a, .btn-link {
     display: inline-block;
 }
 
-.ynex-badge-success {
+.port-dashboard-badge-success {
     background-color: var(--badge-success-bg);
     color: var(--badge-success-color);
 }
 
-.ynex-badge-error {
+.port-dashboard-badge-error {
     background-color: var(--badge-error-bg);
     color: var(--badge-error-color);
 }
 
 /* Return Badge Styles */
-.ynex-return-badge-success,
-.ynex-return-badge-error {
+.port-dashboard-return-badge-success,
+.port-dashboard-return-badge-error {
     font-weight: 700;
     padding: 6px 12px;
     border-radius: var(--border-radius-md);
@@ -503,12 +501,12 @@ a, .btn-link {
     display: inline-block;
 }
 
-.ynex-return-badge-success {
+.port-dashboard-return-badge-success {
     background-color: var(--badge-success-bg);
     color: var(--badge-success-color);
 }
 
-.ynex-return-badge-error {
+.port-dashboard-return-badge-error {
     background-color: var(--badge-error-bg);
     color: var(--badge-error-color);
 }
