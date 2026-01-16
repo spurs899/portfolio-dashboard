@@ -24,6 +24,10 @@ jobs:
       with:
         dotnet-version: 9.0.x
     
+    - name: Update cache version
+      run: |
+        pwsh -File update-version.ps1 -AutoIncrement
+    
     - name: Enable Demo Mode and Set Sentry DSN
       env:
         SENTRY_DSN: ${{ secrets.SENTRY_DSN }}

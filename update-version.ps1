@@ -2,7 +2,8 @@
 # This script updates version numbers in index.html to force cache refresh
 
 param(
-    [string]$Version = ""
+    [string]$Version = "",
+    [switch]$AutoIncrement
 )
 
 $ErrorActionPreference = "Stop"
@@ -18,9 +19,25 @@ Write-Host "=" * 60
 
 # Generate version if not provided
 if ([string]::IsNullOrEmpty($Version)) {
-    # Use timestamp-based version: YYYYMMDD.HHMM
-    $Version = Get-Date -Format "yyyyMMdd.HHmm"
-    Write-Host "Generated version: $Version" -ForegroundColor Yellow
+    if ($AutoIncrement -and (Test-Path $versionPath)) {
+        # Read current version and increment
+        $currentVersion = Get-Content $versionPath -Raw
+        if ($currentVersion -match '^(\d+)\.(\d+)\.(\d+)$') {
+            $major = [int]$matches[1]
+            $minor = [int]$matches[2]
+            $patch = [int]$matches[3] + 1
+            $Version = "$major.$minor.$patch"
+            Write-Host "Auto-incremented version: $currentVersion → $Version" -ForegroundColor Yellow
+        } else {
+            # Invalid format, start fresh
+            $Version = "1.0.0"
+            Write-Host "Starting new version: $Version (previous format invalid)" -ForegroundColor Yellow
+        }
+    } else {
+        # Use timestamp-based version: YYYYMMDD.HHMM
+        $Version = Get-Date -Format "yyyyMMdd.HHmm"
+        Write-Host "Generated timestamp version: $Version" -ForegroundColor Yellow
+    }
 } else {
     Write-Host "Using provided version: $Version" -ForegroundColor Green
 }
@@ -55,5 +72,10 @@ Write-Host "Next steps:" -ForegroundColor Yellow
 Write-Host "  1. Build the project: dotnet build" -ForegroundColor Gray
 Write-Host "  2. Publish the project: dotnet publish -c Release" -ForegroundColor Gray
 Write-Host "  3. Deploy to GitHub Pages" -ForegroundColor Gray
+Write-Host ""
+Write-Host "Usage examples:" -ForegroundColor Cyan
+Write-Host "  .\update-version.ps1                  # Timestamp version (YYYYMMDD.HHMM)" -ForegroundColor Gray
+Write-Host "  .\update-version.ps1 -AutoIncrement   # Auto-increment patch (1.0.1 → 1.0.2)" -ForegroundColor Gray
+Write-Host "  .\update-version.ps1 '2.0.0'          # Custom version" -ForegroundColor Gray
 Write-Host ""
 Write-Host "Users will automatically see the new version on next visit!" -ForegroundColor Green

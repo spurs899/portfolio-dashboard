@@ -246,40 +246,41 @@ No manual Sass compilation needed - DartSassBuilder handles it during the build.
 
 ### Cache Busting for Production
 
-When deploying updates (especially CSS/styling changes), use the version update script to force browsers to load fresh assets:
+The deployment automatically invalidates browser caches on every deploy via the GitHub Actions workflow. The version is auto-incremented (e.g., 1.0.0 → 1.0.1 → 1.0.2) and all cached assets are refreshed.
+
+**Manual version control** (optional):
 
 ```powershell
-# Update version with timestamp (e.g., 20260116.1430)
+# Auto-increment patch version (1.0.2 → 1.0.3)
+.\update-version.ps1 -AutoIncrement
+
+# Use timestamp version (e.g., 20260116.1430)
 .\update-version.ps1
 
-# Or specify a custom version (e.g., 2.1.0)
-.\update-version.ps1 -Version "2.1.0"
+# Set custom version (e.g., 2.0.0 for major release)
+.\update-version.ps1 "2.0.0"
 ```
 
-**What it does:**
+**How it works:**
 - Updates version query strings in `index.html` (`app.css?v=X.X.X`)
 - Updates the `APP_VERSION` constant for cache clearing
 - Writes version to `wwwroot/version.txt`
 - On user's next visit, browser automatically clears old cached assets
 
-**Deployment workflow:**
-1. Make your changes (CSS, components, etc.)
-2. Run `.\update-version.ps1`
-3. Build: `dotnet build`
-4. Publish: `dotnet publish -c Release`
-5. Deploy to hosting (GitHub Pages, Azure, etc.)
-
-Users will automatically see the new version - no manual cache clearing needed!
-
 ### GitHub Pages Deployment
 
-The repo includes a GitHub Actions workflow for automated deployment:
+The repo includes a GitHub Actions workflow for **automated deployment with cache busting**:
 
-1. Go to **Actions** → **Deploy to GitHub Pages**
-2. Click **Run workflow** → Select `master` branch
-3. Site deploys to [https://spurs899.github.io/portfolio-dashboard/](https://spurs899.github.io/portfolio-dashboard/)
+1. Push to `master` branch (after Build and Test passes)
+2. Or manually: **Actions** → **Deploy to GitHub Pages** → **Run workflow**
+3. Workflow auto-increments version and deploys to [https://spurs899.github.io/portfolio-dashboard/](https://spurs899.github.io/portfolio-dashboard/)
 
-Before deploying, run `.\update-version.ps1` locally and commit the updated `index.html`.
+**The workflow automatically:**
+- Increments the cache version
+- Builds and publishes the app
+- Deploys to GitHub Pages
+- Users see fresh content on next visit (no manual cache clearing!)
+
 
 ## Roadmap & Known Limitations
 
