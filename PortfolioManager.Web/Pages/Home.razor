@@ -65,9 +65,19 @@ else if (_portfolioData != null)
         <!-- Daily Return Card -->
         <MudCard Class="mobile-return-card mb-3" Elevation="0">
             <MudCardContent>
+                <div class="d-flex justify-space-between align-start mb-2">
+                    <div class="d-flex align-center gap-2">
+                        <MudText Typo="Typo.caption" Class="mobile-return-label">DAILY RETURN</MudText>
+                        <span class="mobile-currency-badge">@GetPortfolioCurrency()</span>
+                    </div>
+                    <MudIconButton Icon="@Icons.Material.Filled.Refresh" 
+                                   Color="Color.Primary" 
+                                   Size="Size.Small"
+                                   OnClick="@RefreshPortfolio"
+                                   Class="mobile-refresh-button" />
+                </div>
                 <div class="d-flex justify-space-between align-start">
                     <div>
-                        <MudText Typo="Typo.caption" Class="mobile-return-label">DAILY RETURN</MudText>
                         <MudText Typo="Typo.h5" Class="mobile-return-value">@GetDailyReturn().ToString("C")</MudText>
                         <div class="mobile-return-percentage @(GetDailyReturnPercentage() >= 0 ? "positive" : "negative")">
                             <MudIcon Icon="@(GetDailyReturnPercentage() >= 0 ? Icons.Material.Filled.ArrowDropUp : Icons.Material.Filled.ArrowDropDown)" Size="Size.Small" />
