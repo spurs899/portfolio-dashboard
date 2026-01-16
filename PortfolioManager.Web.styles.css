@@ -1,3 +1,28 @@
+/* /Components/TimeAndMarketStatusCard.razor.rz.scp.css */
+/* Market Status Chips */
+.market-status-open[b-phq46tv9wn] {
+    background-color: #4caf50 !important;
+    color: white !important;
+    font-weight: 600 !important;
+}
+
+.market-status-closed[b-phq46tv9wn] {
+    background-color: #9e9e9e !important;
+    color: white !important;
+    font-weight: 600 !important;
+}
+
+.market-status-premarket[b-phq46tv9wn] {
+    background-color: #ff9800 !important;
+    color: white !important;
+    font-weight: 600 !important;
+}
+
+.market-status-afterhours[b-phq46tv9wn] {
+    background-color: #2196f3 !important;
+    color: white !important;
+    font-weight: 600 !important;
+}
 /* /Layout/MainLayout.razor.rz.scp.css */
 .page[b-cq60oz7d5o] {
     position: relative;
