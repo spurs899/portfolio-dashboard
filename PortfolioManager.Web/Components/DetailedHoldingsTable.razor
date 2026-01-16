@@ -1,7 +1,7 @@
 @using MudBlazor
 @using PortfolioManager.Contracts
 
-<MudCard Elevation="0" Class="ynex-table-card">
+<MudCard Elevation="0" Class="port-dashboard-table-card">
     <MudCardHeader Class="pb-0">
         <CardHeaderContent>
             <MudText Typo="Typo.h6" Class="fw-bold">Detailed Holdings</MudText>
@@ -14,21 +14,21 @@
     <MudCardContent Class="pa-0">
         <MudTable Items="@Holdings" 
                   Hover="true" 
-                  Class="ynex-table" 
+                  Class="port-dashboard-table" 
                   Elevation="0" 
                   Bordered="false"
                   SortLabel="Sort By"
                   AllowUnsorted="true"
                   Dense="false">
             <HeaderContent>
-                <MudTh Class="ynex-table-header"><MudTableSortLabel SortBy="new Func<ViewModels.DetailedHoldingsTable.HoldingViewModel, object>(x => x.Symbol)">Symbol</MudTableSortLabel></MudTh>
-                <MudTh Class="ynex-table-header"><MudTableSortLabel SortBy="new Func<ViewModels.DetailedHoldingsTable.HoldingViewModel, object>(x => x.Currency)">Currency</MudTableSortLabel></MudTh>
-                <MudTh Class="ynex-table-header text-right"><MudTableSortLabel SortBy="new Func<ViewModels.DetailedHoldingsTable.HoldingViewModel, object>(x => x.SharePrice)">Share Price</MudTableSortLabel></MudTh>
-                <MudTh Class="ynex-table-header text-right"><MudTableSortLabel SortBy="new Func<ViewModels.DetailedHoldingsTable.HoldingViewModel, object>(x => x.SharesOwned)">Shares</MudTableSortLabel></MudTh>
-                <MudTh Class="ynex-table-header text-right"><MudTableSortLabel InitialDirection="SortDirection.Descending" SortBy="new Func<ViewModels.DetailedHoldingsTable.HoldingViewModel, object>(x => x.InvestmentValue)">Market Value</MudTableSortLabel></MudTh>
-                <MudTh Class="ynex-table-header text-right"><MudTableSortLabel SortBy="new Func<ViewModels.DetailedHoldingsTable.HoldingViewModel, object>(x => x.DailyReturn)">Daily Return</MudTableSortLabel></MudTh>
-                <MudTh Class="ynex-table-header text-right"><MudTableSortLabel SortBy="new Func<ViewModels.DetailedHoldingsTable.HoldingViewModel, object>(x => x.DailyReturnPercentage)">Return %</MudTableSortLabel></MudTh>
-                <MudTh Class="ynex-table-header"><MudTableSortLabel SortBy="new Func<ViewModels.DetailedHoldingsTable.HoldingViewModel, object>(x => x.BrokerageType)">Brokerage</MudTableSortLabel></MudTh>
+                <MudTh Class="port-dashboard-table-header"><MudTableSortLabel SortBy="new Func<ViewModels.DetailedHoldingsTable.HoldingViewModel, object>(x => x.Symbol)">Symbol</MudTableSortLabel></MudTh>
+                <MudTh Class="port-dashboard-table-header"><MudTableSortLabel SortBy="new Func<ViewModels.DetailedHoldingsTable.HoldingViewModel, object>(x => x.Currency)">Currency</MudTableSortLabel></MudTh>
+                <MudTh Class="port-dashboard-table-header text-right"><MudTableSortLabel SortBy="new Func<ViewModels.DetailedHoldingsTable.HoldingViewModel, object>(x => x.SharePrice)">Share Price</MudTableSortLabel></MudTh>
+                <MudTh Class="port-dashboard-table-header text-right"><MudTableSortLabel SortBy="new Func<ViewModels.DetailedHoldingsTable.HoldingViewModel, object>(x => x.SharesOwned)">Shares</MudTableSortLabel></MudTh>
+                <MudTh Class="port-dashboard-table-header text-right"><MudTableSortLabel InitialDirection="SortDirection.Descending" SortBy="new Func<ViewModels.DetailedHoldingsTable.HoldingViewModel, object>(x => x.InvestmentValue)">Market Value</MudTableSortLabel></MudTh>
+                <MudTh Class="port-dashboard-table-header text-right"><MudTableSortLabel SortBy="new Func<ViewModels.DetailedHoldingsTable.HoldingViewModel, object>(x => x.DailyReturn)">Daily Return</MudTableSortLabel></MudTh>
+                <MudTh Class="port-dashboard-table-header text-right"><MudTableSortLabel SortBy="new Func<ViewModels.DetailedHoldingsTable.HoldingViewModel, object>(x => x.DailyReturnPercentage)">Return %</MudTableSortLabel></MudTh>
+                <MudTh Class="port-dashboard-table-header"><MudTableSortLabel SortBy="new Func<ViewModels.DetailedHoldingsTable.HoldingViewModel, object>(x => x.BrokerageType)">Brokerage</MudTableSortLabel></MudTh>
             </HeaderContent>
             <RowTemplate>
                 <MudTd DataLabel="Symbol">
@@ -61,7 +61,7 @@
                     </MudText>
                 </MudTd>
                 <MudTd DataLabel="Return %" Class="text-right">
-                    <span class="@(context.DailyReturnPercentage >= 0 ? "ynex-return-badge-success" : "ynex-return-badge-error")"
+                    <span class="@(context.DailyReturnPercentage >= 0 ? "port-dashboard-return-badge-success" : "port-dashboard-return-badge-error")"
                           aria-label="@($"Daily return percentage {(context.DailyReturnPercentage >= 0 ? "gain" : "loss")} {Math.Abs(context.DailyReturnPercentage).ToString("F2")} percent")">
                         @(context.DailyReturnPercentage >= 0 ? "▲" : "▼") @Math.Abs(context.DailyReturnPercentage).ToString("F2")%
                     </span>
