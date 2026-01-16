@@ -48,22 +48,22 @@ $color-sharesies-primary: #ff4785;
 $color-sharesies-dark: #ff1f6b;
 $color-sharesies-darker: #e6195e;
 
-// Spacing Scale (following Tailwind conventions)
+// Spacing Scale (following Tailwind conventions) - SCALED DOWN
 $spacing-1: 0.25rem; // 4px
 $spacing-2: 0.5rem;  // 8px
-$spacing-3: 0.75rem; // 12px
-$spacing-4: 1rem;    // 16px
-$spacing-5: 1.25rem; // 20px
-$spacing-6: 1.5rem;  // 24px
+$spacing-3: 0.5rem;  // 8px (scaled down from 12px)
+$spacing-4: 0.75rem; // 12px (scaled down from 16px)
+$spacing-5: 0.75rem; // 12px (scaled down from 20px)
+$spacing-6: 1rem;    // 16px (scaled down from 24px)
 $spacing-8: 2rem;    // 32px
 $spacing-10: 2.5rem; // 40px
 $spacing-12: 3rem;   // 48px
 
-// Border Radius (following Stitch design)
+// Border Radius (following Stitch design) - SCALED DOWN
 $border-radius-sm: 0.5rem;   // 8px
-$border-radius-md: 0.75rem;  // 12px
-$border-radius-lg: 1rem;     // 16px
-$border-radius-xl: 1.25rem;  // 20px
+$border-radius-md: 0.5rem;   // 8px (scaled from 12px)
+$border-radius-lg: 0.75rem;  // 12px (scaled from 16px)
+$border-radius-xl: 0.75rem;  // 12px (scaled from 20px)
 $border-radius-2xl: 1.5rem;  // 24px
 $border-radius-full: 9999px;
 
@@ -85,13 +85,13 @@ $shadow-primary: 0 10px 25px -5px rgba(30, 64, 175, 0.2);
 $font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 $font-family-monospace: 'Roboto Mono', 'SF Mono', Monaco, 'Cascadia Code', monospace;
 
-$font-size-xs: 0.75rem;    // 12px
-$font-size-sm: 0.875rem;   // 14px
+$font-size-xs: 0.6875rem;  // 11px (scaled down)
+$font-size-sm: 0.8125rem;  // 13px (scaled down)
 $font-size-base: 1rem;     // 16px
-$font-size-lg: 1.125rem;   // 18px
-$font-size-xl: 1.25rem;    // 20px
-$font-size-2xl: 1.5rem;    // 24px
-$font-size-3xl: 1.875rem;  // 30px
+$font-size-lg: 1rem;       // 16px (scaled down from 18px)
+$font-size-xl: 1.125rem;   // 18px (scaled down from 20px)
+$font-size-2xl: 1.25rem;   // 20px (scaled down from 24px)
+$font-size-3xl: 1.5rem;    // 24px (scaled down from 30px)
 $font-size-4xl: 2.25rem;   // 36px
 
 $font-weight-light: 300;
@@ -297,8 +297,8 @@ a, .btn-link {
 }
 
 .stat-icon {
-  padding: $spacing-3;
-  border-radius: $border-radius-lg;
+  padding: $spacing-2;
+  border-radius: $border-radius-md;
   
   &.primary {
     background-color: rgba(30, 64, 175, 0.1);
@@ -431,9 +431,9 @@ a, .btn-link {
 // Symbol avatars (matching Stitch rounded squares)
 .port-dashboard-table {
   .mud-avatar {
-    width: 40px !important;
-    height: 40px !important;
-    border-radius: $border-radius-md !important;
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: $border-radius-sm !important;
     font-size: $font-size-xs !important;
     font-weight: $font-weight-bold !important;
   }
@@ -441,9 +441,9 @@ a, .btn-link {
 
 // Portfolio Dashboard Avatar Icons (for stat cards)
 .port-dashboard-avatar-icon {
-  width: 48px !important;
-  height: 48px !important;
-  border-radius: $border-radius-lg !important;
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: $border-radius-md !important;
   
   &.mud-avatar-filled {
     background-color: rgba(30, 64, 175, 0.1) !important;
@@ -610,7 +610,7 @@ a, .btn-link {
   text-transform: uppercase;
   letter-spacing: $letter-spacing-wider;
   color: $color-text-secondary;
-  padding: $spacing-4 $spacing-5;
+  padding: $spacing-3 $spacing-4;
   border-bottom: 2px solid $color-border;
 }
 
@@ -620,9 +620,9 @@ a, .btn-link {
 }
 
 .symbol-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: $border-radius-md;
+  width: 32px;
+  height: 32px;
+  border-radius: $border-radius-sm;
   background-color: $color-primary;
   color: $color-text-white;
   display: flex;
@@ -715,7 +715,7 @@ a, .btn-link {
   background: $color-sidebar-navy !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
   box-shadow: $shadow-sm !important;
-  height: 64px !important;
+  height: 56px !important;
 }
 
 .appbar-title {
@@ -734,8 +734,8 @@ a, .btn-link {
 
 .appbar-logo-desktop {
   display: block;
-  height: 40px;
-  width: 40px;
+  height: 36px;
+  width: 36px;
   border-radius: $border-radius-md;
   padding: 3px;
   background: $color-primary;
@@ -753,12 +753,30 @@ a, .btn-link {
 .professional-drawer {
   border-right: 1px solid $color-border-dark !important;
   background: $color-sidebar-navy !important;
+  
+  .mud-drawer {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+  
+  .mud-drawer-content {
+    padding-top: 0 !important;
+  }
+}
+
+.mud-drawer-clipped-always {
+  margin-top: 0 !important;
+  top: 56px !important;
+  height: calc(100vh - 56px) !important;
 }
 
 .drawer-header {
   background: rgba(15, 23, 42, 0.6) !important;
   border-bottom: 1px solid $color-border-dark !important;
-  padding: $spacing-6;
+  padding: $spacing-3 $spacing-4 !important;
+  padding-left: 1.25rem !important;
+  margin-top: 0 !important;
+  min-height: auto !important;
 }
 
 .drawer-title {
@@ -767,10 +785,16 @@ a, .btn-link {
   text-transform: uppercase;
   letter-spacing: $letter-spacing-wider;
   font-size: $font-size-xs !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .professional-content {
   background-color: $color-bg-light-grey !important;
+}
+
+.professional-drawer .mud-drawer-content {
+  padding-top: 0 !important;
 }
 
 // Sidebar navigation items
@@ -786,7 +810,7 @@ a, .btn-link {
 .professional-drawer .mud-nav-link {
   color: $color-text-muted !important;
   border-radius: $border-radius-md;
-  padding: $spacing-3;
+  padding: $spacing-2;
   margin: 2px 0;
   transition: $transition-all;
   
@@ -800,7 +824,7 @@ a, .btn-link {
     color: $color-text-white !important;
     font-weight: $font-weight-medium !important;
     border-left: 4px solid $color-primary;
-    padding-left: calc(#{$spacing-3} - 4px);
+    padding-left: calc(#{$spacing-2} - 4px);
   }
 }
 
@@ -852,7 +876,7 @@ a, .btn-link {
   border: none !important;
   
   .mud-card-content {
-    padding: $spacing-6 !important;
+    padding: $spacing-4 !important;
   }
   
   .time-section {
@@ -861,9 +885,9 @@ a, .btn-link {
     gap: $spacing-4;
     
     .time-icon {
-      padding: $spacing-3;
+      padding: $spacing-2;
       background: rgba(255, 255, 255, 0.1);
-      border-radius: $border-radius-lg;
+      border-radius: $border-radius-md;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1162,7 +1186,7 @@ code {
 }
 
 .mud-card-content {
-  padding: $spacing-6 !important;
+  padding: $spacing-4 !important;
 }
 
 // Override MudTable styling globally
@@ -1233,8 +1257,8 @@ code {
 // MudAvatar size overrides for tables
 .mud-table {
   .mud-avatar {
-    width: 40px !important;
-    height: 40px !important;
+    width: 32px !important;
+    height: 32px !important;
     font-size: $font-size-sm !important;
   }
 }
