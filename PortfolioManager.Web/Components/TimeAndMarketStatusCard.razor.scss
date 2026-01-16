@@ -1,24 +1,35 @@
-/* Market Status Chips */
+// ============================================================================
+// TimeAndMarketStatusCard Component Styles
+// ============================================================================
+
+// Market Status Colors
+$status-open: #4caf50;
+$status-closed: #9e9e9e;
+$status-premarket: #ff9800;
+$status-afterhours: #2196f3;
+
+// Market Status Chips - using ::deep to pierce MudBlazor components
 ::deep .market-status-open {
-    background-color: #4caf50 !important;
+    background-color: $status-open !important;
     color: white !important;
     font-weight: 600 !important;
 }
 
 ::deep .market-status-closed {
-    background-color: #9e9e9e !important;
+    background-color: $status-closed !important;
     color: white !important;
     font-weight: 600 !important;
 }
 
 ::deep .market-status-premarket {
-    background-color: #ff9800 !important;
+    background-color: $status-premarket !important;
     color: white !important;
     font-weight: 600 !important;
 }
 
 ::deep .market-status-afterhours {
-    background-color: #2196f3 !important;
+    background-color: $status-afterhours !important;
     color: white !important;
     font-weight: 600 !important;
 }
+

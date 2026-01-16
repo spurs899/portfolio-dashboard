@@ -195,9 +195,32 @@ For running integration tests, create `appsettings.json` in test projects:
 - **Backend**: ASP.NET Core 9.0 Web API
 - **Frontend**: Blazor WebAssembly 9.0
 - **UI Framework**: MudBlazor 8.15.0
+- **Styling**: Sass/SCSS with DartSassBuilder
 - **Automation**: Microsoft Playwright (for IBKR)
 - **Error Tracking**: Sentry
 - **API Documentation**: Swagger/OpenAPI
+
+### Styling Architecture
+
+The application uses **Sass (SCSS)** for all styling with automatic compilation via DartSassBuilder.
+
+**Structure:**
+- **Component-scoped styles**: Each Blazor component has its own `.razor.scss` file that compiles to `.razor.css`
+  - `TimeAndMarketStatusCard.razor.scss` - Market status chip styling
+  - Uses `::deep` selector to style MudBlazor child components
+- **Global stylesheet**: `wwwroot/css/app.scss` - Main stylesheet with Sass variables, mixins, and responsive design
+  - 100+ Sass variables for colors, spacing, typography, transitions, shadows
+  - 15+ mixins for common patterns (flexbox, cards, badges, gradients, breakpoints)
+  - Compiles to `wwwroot/css/app.css` automatically on build
+
+**Code-behind pattern**: All components use the `.razor.cs` code-behind pattern for clean separation of markup and logic.
+
+**Build process:**
+```sh
+dotnet build  # Automatically compiles all .scss files
+```
+
+No manual Sass compilation needed - DartSassBuilder handles it during the build.
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
